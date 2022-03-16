@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>강좌 정보 페이지</title>
+</head>
+<body>
+    <h1>강좌 목록 </h1>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+    <div style="float:right">
+        <a href="/edit-blog-list">내 글 관리</a>
+        |
+        <a href="/category/list"> 카테고리 관리 </a>
+    </div>
+    <div style="content: ''; clear: both"></div>
+    <div>
+        <a href="?">
+            전체 (<span th:text="${courseTotalCount}">0</span>)</a>
+
+        <th:block th:each="y : ${categoryList}">
+            |
+            <a th:href="'/course?categoryId=' + ${y.id}">
+                <span th:text="${y.categoryName}">카테고리명</span> (<span th:text="${y.courseCount}">0</span>)</a>
+        </th:block>
+        <hr/>
+    </div>
+
+    <ul>
+        <li th:each="x : ${list}" style="margin-bottom: 10px; border-bottom: solid 1px lightgray">
+            <div style="float: left; width: 300px; height : 150px; box-sizing: border-box; border: solid 1px black">
+                <img th:src = "${x.urlFilename}" alt = "thumbnail" style="width: 100%; height: 100%">
+            </div>
+            <div style="float: left">
+                <div>
+                    <a th:href="'/course/' + ${x.id}">
+                        <h3 th:text="${x.subject}">강좌명</h3>
+                    </a>
+                    <div>
+                        <p th:text="${x.summary}"></p>
+                        <p>
+                            키워드: <span th:text="${x.keyword}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="content: ''; clear: both "></div>
+        </li>
+    </ul>
+
+
+
+</body>
+</html>
