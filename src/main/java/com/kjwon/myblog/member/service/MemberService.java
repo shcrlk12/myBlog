@@ -3,7 +3,7 @@ package com.kjwon.myblog.member.service;
 
 
 public interface MemberService {
-    
+    //
 //    boolean register(MemberInput parameter);
 //
 //    /**
