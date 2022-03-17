@@ -2,6 +2,8 @@ FROM tomcat:9-jre8-alpine
 
 COPY server.xml /usr/local/tomcat/conf
 
+COPY catalina.properties /usr/local/tomcat/conf
+
 # war 파일 복사
 COPY target/*.war /usr/local/tomcat/webapps/app.war
 
