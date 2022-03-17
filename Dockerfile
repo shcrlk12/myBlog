@@ -7,6 +7,8 @@ COPY catalina.properties /usr/local/tomcat/conf
 # war 파일 복사
 COPY target/*.war /usr/local/tomcat/webapps/app.war
 
+RUN rm -r usr/local/tomcat/webapps/ROOT
+
 ENV JAVA_OPTS="-DsvrNo=4"
 ENV TZ=Asia/Seoul
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
