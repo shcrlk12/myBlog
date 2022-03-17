@@ -11,6 +11,7 @@ ENV JAVA_OPTS="-DsvrNo=4"
 ENV TZ=Asia/Seoul
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN rm -r /usr/local/tomcat/webapps/ROOT
 EXPOSE 80
 
 #FROM ubuntu:18.04
