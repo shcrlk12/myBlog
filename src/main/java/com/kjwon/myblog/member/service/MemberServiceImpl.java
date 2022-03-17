@@ -1,6 +1,10 @@
 package com.kjwon.myblog.member.service;
 
 
+import com.kjwon.myblog.admin.dto.MemberDto;
+import com.kjwon.myblog.admin.entity.EmailTemplate;
+import com.kjwon.myblog.admin.repository.EmailTemplateRepository;
+import com.kjwon.myblog.components.MailComponents;
 import com.kjwon.myblog.member.entity.Member;
 import com.kjwon.myblog.member.model.MemberInput;
 import com.kjwon.myblog.member.repository.MemberRepository;
@@ -27,8 +31,8 @@ import java.util.UUID;
 public class MemberServiceImpl implements MemberService {
     
     private final MemberRepository memberRepository;
-//    private final MailComponents mailComponents;
-//    private final EmailTemplateRepository emailTemplateRepository;
+    private final MailComponents mailComponents;
+    private final EmailTemplateRepository emailTemplateRepository;
 //
 //    private final MemberMapper memberMapper;
 //    private final LoginHistoryMapper loginHistoryMapper;
@@ -51,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
                 .userId(parameter.getUserId())
                 .userName(parameter.getUserName())
                 .phone(parameter.getPhone())
-                .password(parameter.getPassword())
+                .password(encPassword)
                 .regDt(LocalDateTime.now())
                 .emailAuthYn(false)
                 .emailAuthKey(uuid)
@@ -59,43 +63,43 @@ public class MemberServiceImpl implements MemberService {
                 .build();
         memberRepository.save(member);
 
-//        Optional<EmailTemplate> emailTemplateOptional = emailTemplateRepository.findById("MEMBER_REGISTER");
-//
-//        if(emailTemplateOptional.isEmpty())
-//            return false;
-//
-//        EmailTemplate emailTemplate = emailTemplateOptional.get();
-//
-//        String email = parameter.getUserId();
-//        String subject = emailTemplate.getMailTitle();
-//        String text = emailTemplate.getMailContext().replace("${uuid}", uuid);
-//
-//        mailComponents.sendMail(email, subject, text);
+        Optional<EmailTemplate> emailTemplateOptional = emailTemplateRepository.findById("MEMBER_REGISTER");
+
+        if(!emailTemplateOptional.isPresent())
+            return false;
+
+        EmailTemplate emailTemplate = emailTemplateOptional.get();
+
+        String email = parameter.getUserId();
+        String subject = emailTemplate.getMailTitle();
+        String text = emailTemplate.getMailContext().replace("${uuid}", uuid);
+
+        mailComponents.sendMail(email, subject, text);
         
         return true;
     }
     
-//    @Override
-//    public boolean emailAuth(String uuid) {
-//
-//        Optional<Member> optionalMember = memberRepository.findByEmailAuthKey(uuid);
-//        if (!optionalMember.isPresent()) {
-//            return false;
-//        }
-//
-//        Member member = optionalMember.get();
-//
-//        if (member.isEmailAuthYn()) {
-//            return false;
-//        }
-//
-//        member.setUserStatus(Member.MEMBER_STATUS_ING);
-//        member.setEmailAuthYn(true);
-//        member.setEmailAuthDt(LocalDateTime.now());
-//        memberRepository.save(member);
-//
-//        return true;
-//    }
+    @Override
+    public boolean emailAuth(String uuid) {
+
+        Optional<Member> optionalMember = memberRepository.findByEmailAuthKey(uuid);
+        if (!optionalMember.isPresent()) {
+            return false;
+        }
+
+        Member member = optionalMember.get();
+
+        if (member.isEmailAuthYn()) {
+            return false;
+        }
+
+        member.setUserStatus(Member.MEMBER_STATUS_ING);
+        member.setEmailAuthYn(true);
+        member.setEmailAuthDt(LocalDateTime.now());
+        memberRepository.save(member);
+
+        return true;
+    }
     
 //    @Override
 //    public boolean sendResetPassword(ResetPasswordInput parameter) {
@@ -149,18 +153,18 @@ public class MemberServiceImpl implements MemberService {
 //        //return memberRepository.findAll();
 //    }
 //
-//    @Override
-//    public MemberDto detail(String userId) {
-//
-//        Optional<Member> optionalMember  = memberRepository.findById(userId);
-//        if (!optionalMember.isPresent()) {
-//            return null;
-//        }
-//
-//        Member member = optionalMember.get();
-//
-//        return MemberDto.of(member);
-//    }
+    @Override
+    public MemberDto detail(String userId) {
+
+        Optional<Member> optionalMember  = memberRepository.findById(userId);
+        if (!optionalMember.isPresent()) {
+            return null;
+        }
+
+        Member member = optionalMember.get();
+
+        return MemberDto.of(member);
+    }
 //
 //    @Override
 //    public boolean updateStatus(String userId, String userStatus) {
@@ -322,51 +326,51 @@ public class MemberServiceImpl implements MemberService {
 //        return loginHistoryDtos;
 //    }
 //
-//    @Override
-//    public boolean checkResetPassword(String uuid) {
-//        Optional<Member> optionalMember = memberRepository.findByResetPasswordKey(uuid);
-//        if(!optionalMember.isPresent()) {
-//            return false;
-//        }
-//
-//        Member member = optionalMember.get();
-//
-//        if(member.getResetPasswordLimitDt() == null) {
-//            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
-//        }
-//
-//        if(member.getResetPasswordLimitDt().isBefore(LocalDateTime.now())) {
-//            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
-//        }
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean resetPassword(String uuid, String password) {
-//        Optional<Member> optionalMember = memberRepository.findByResetPasswordKey(uuid);
-//        if(!optionalMember.isPresent()) {
-//            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
-//        }
-//
-//        Member member = optionalMember.get();
-//
-//        if(member.getResetPasswordLimitDt() == null) {
-//            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
-//        }
-//
-//        if(member.getResetPasswordLimitDt().isBefore(LocalDateTime.now())) {
-//            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
-//        }
-//
-//        String encPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-//        member.setPassword(encPassword);
-//        member.setResetPasswordKey("");
-//        member.setResetPasswordLimitDt(null);
-//
-//        memberRepository.save(member);
-//        return true;
-//    }
+    @Override
+    public boolean checkResetPassword(String uuid) {
+        Optional<Member> optionalMember = memberRepository.findByResetPasswordKey(uuid);
+        if(!optionalMember.isPresent()) {
+            return false;
+        }
+
+        Member member = optionalMember.get();
+
+        if(member.getResetPasswordLimitDt() == null) {
+            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
+        }
+
+        if(member.getResetPasswordLimitDt().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean resetPassword(String uuid, String password) {
+        Optional<Member> optionalMember = memberRepository.findByResetPasswordKey(uuid);
+        if(!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        if(member.getResetPasswordLimitDt() == null) {
+            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
+        }
+
+        if(member.getResetPasswordLimitDt().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException(" 유효한 날짜가 아닙니다.");
+        }
+
+        String encPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        member.setPassword(encPassword);
+        member.setResetPasswordKey("");
+        member.setResetPasswordLimitDt(null);
+
+        memberRepository.save(member);
+        return true;
+    }
 }
 
 

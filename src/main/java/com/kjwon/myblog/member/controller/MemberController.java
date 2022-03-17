@@ -1,7 +1,9 @@
 package com.kjwon.myblog.member.controller;
 
 
+import com.kjwon.myblog.admin.dto.MemberDto;
 import com.kjwon.myblog.member.model.MemberInput;
+import com.kjwon.myblog.member.model.ResetPasswordInput;
 import com.kjwon.myblog.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -70,8 +72,8 @@ public class MemberController {
         String uuid = request.getParameter("id");
         System.out.println(uuid);
 
-//        boolean result = memberService.emailAuth(uuid);
-//        model.addAttribute("result", result);
+        boolean result = memberService.emailAuth(uuid);
+        model.addAttribute("result", result);
 
         return "member/email_auth";
     }
@@ -79,10 +81,10 @@ public class MemberController {
     @GetMapping("/member/info")
     public String memberInfo(Model model, Principal principal) {
 
-//        String userId = principal.getName();
-//        MemberDto detail = memberService.detail(userId);
-//
-//        model.addAttribute("detail", detail);
+        String userId = principal.getName();
+        MemberDto detail = memberService.detail(userId);
+
+        model.addAttribute("detail", detail);
 
         return "member/info";
     }
@@ -107,9 +109,9 @@ public class MemberController {
     public String memberPassword(Model model, Principal principal) {
 
         String userId = principal.getName();
-//        MemberDto detail = memberService.detail(userId);
-//
-//        model.addAttribute("detail", detail);
+        MemberDto detail = memberService.detail(userId);
+
+        model.addAttribute("detail", detail);
 
         return "member/password";
     }
@@ -157,25 +159,25 @@ public class MemberController {
     public String resetPasswrod(Model model, HttpServletRequest request) {
         String uuid = request.getParameter("id");
 
-//        boolean result = memberService.checkResetPassword(uuid);
-//
-//        model.addAttribute("result", result);
+        boolean result = memberService.checkResetPassword(uuid);
+
+        model.addAttribute("result", result);
 
         return "member/reset_password";
     }
-//
-//    @PostMapping("/member/reset/password")
-//    public String resetPasswrodSubmit(Model model, ResetPasswordInput parameter) {
-//
-//        boolean result = false;
-//
-//        try {
-//            result = memberService.resetPassword(parameter.getId(), parameter.getPassword());
-//        }catch(Exception e){
-//        }
-//
-//        model.addAttribute("result", result);
-//        return "member/reset_password_result";
-//    }
+
+    @PostMapping("/member/reset/password")
+    public String resetPasswrodSubmit(Model model, ResetPasswordInput parameter) {
+
+        boolean result = false;
+
+        try {
+            result = memberService.resetPassword(parameter.getId(), parameter.getPassword());
+        }catch(Exception e){
+        }
+
+        model.addAttribute("result", result);
+        return "member/reset_password_result";
+    }
 
 }

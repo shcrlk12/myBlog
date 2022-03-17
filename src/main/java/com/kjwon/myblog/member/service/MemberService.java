@@ -1,6 +1,7 @@
 package com.kjwon.myblog.member.service;
 
 
+import com.kjwon.myblog.admin.dto.MemberDto;
 import com.kjwon.myblog.member.model.MemberInput;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -11,7 +12,7 @@ public interface MemberService extends UserDetailsService {
 //    /**
 //     * uuid에 해당하는 계정을 활성화 함.
 //     */
-//    boolean emailAuth(String uuid);
+    boolean emailAuth(String uuid);
 //
 //    /**
 //     * 입력한 이메일로 비밀번호 초기화 정보를 전송
@@ -27,7 +28,7 @@ public interface MemberService extends UserDetailsService {
 //    /**
 //     * 회원 상세 정보
 //     */
-//    MemberDto detail(String userId);
+    MemberDto detail(String userId);
 //
 //    /**
 //     * 회원 상태 변경
@@ -57,8 +58,8 @@ public interface MemberService extends UserDetailsService {
 //
 //    List<LoginHistoryDto> detail2(String userId);
 //
-//    boolean checkResetPassword(String uuid);
-//
-//    boolean resetPassword(String id, String password);
+    boolean checkResetPassword(String uuid);
+
+    boolean resetPassword(String id, String password);
 
 }
