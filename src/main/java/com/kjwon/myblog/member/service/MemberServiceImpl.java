@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -34,45 +35,45 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 회원 가입
      */
-//    @Override
-//    public boolean register(MemberInput parameter) {
-//
-//        Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
-//        if (optionalMember.isPresent()) {
-//            //현재 userId에 해당하는 데이터 존재
-//            return false;
-//        }
-//
-//        String encPassword = BCrypt.hashpw(parameter.getPassword(), BCrypt.gensalt());
-//        String uuid = UUID.randomUUID().toString();
-//
-//        Member member = Member.builder()
-//                .userId(parameter.getUserId())
-//                .userName(parameter.getUserName())
-//                .phone(parameter.getPhone())
-//                .password(parameter.getPassword())
-//                .regDt(LocalDateTime.now())
-//                .emailAuthYn(false)
-//                .emailAuthKey(uuid)
-//                .userStatus(Member.MEMBER_STATUS_REQ)
-//                .build();
-//        memberRepository.save(member);
+    @Override
+    public boolean register(MemberInput parameter) {
+
+        Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
+        if (optionalMember.isPresent()) {
+            //현재 userId에 해당하는 데이터 존재
+            return false;
+        }
+
+        String encPassword = BCrypt.hashpw(parameter.getPassword(), BCrypt.gensalt());
+        String uuid = UUID.randomUUID().toString();
+
+        Member member = Member.builder()
+                .userId(parameter.getUserId())
+                .userName(parameter.getUserName())
+                .phone(parameter.getPhone())
+                .password(parameter.getPassword())
+                .regDt(LocalDateTime.now())
+                .emailAuthYn(false)
+                .emailAuthKey(uuid)
+                .userStatus(Member.MEMBER_STATUS_REQ)
+                .build();
+        memberRepository.save(member);
 
 //        Optional<EmailTemplate> emailTemplateOptional = emailTemplateRepository.findById("MEMBER_REGISTER");
-
+//
 //        if(emailTemplateOptional.isEmpty())
 //            return false;
-
+//
 //        EmailTemplate emailTemplate = emailTemplateOptional.get();
-
+//
 //        String email = parameter.getUserId();
 //        String subject = emailTemplate.getMailTitle();
 //        String text = emailTemplate.getMailContext().replace("${uuid}", uuid);
 //
 //        mailComponents.sendMail(email, subject, text);
         
-//        return true;
-//    }
+        return true;
+    }
     
 //    @Override
 //    public boolean emailAuth(String uuid) {

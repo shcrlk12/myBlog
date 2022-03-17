@@ -1,10 +1,13 @@
 package com.kjwon.myblog.member.controller;
 
 
+import com.kjwon.myblog.member.model.MemberInput;
+import com.kjwon.myblog.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,8 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @Controller
 public class MemberController {
+
+    private final MemberService memberService;
 
     @RequestMapping("/member/login")
     public String login() {
@@ -41,16 +46,16 @@ public class MemberController {
 
         return "member/register";
     }
-//
-//    @PostMapping("/member/register")
-//    public String registerSubmit(Model model, HttpServletRequest request
-//            , MemberInput parameter) {
-//
-//        boolean result = memberService.register(parameter);
-//        model.addAttribute("result", result);
-//
-//        return "member/register_complete";
-//    }
+
+    @PostMapping("/member/register")
+    public String registerSubmit(Model model, HttpServletRequest request
+            , MemberInput parameter) {
+
+        boolean result = memberService.register(parameter);
+        model.addAttribute("result", result);
+
+        return "member/register_complete";
+    }
 //
 //    // http://www.naver.com/news/list.do?id=123&key=124&text=쿼리
 //    // https://
