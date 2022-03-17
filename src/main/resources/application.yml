@@ -34,3 +34,6 @@ spring:
     suffix: .html
     mode: HTML5
     cache: false
+
+server:
+  port: 8010
