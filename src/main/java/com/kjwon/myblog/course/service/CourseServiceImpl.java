@@ -66,6 +66,7 @@ public class CourseServiceImpl implements CourseService {
                         .regDt(LocalDateTime.now())
                         .filename(parameter.getFilename())
                         .urlFilename(parameter.getUrlFilename())
+                        .category(category)
                         .build();
 
                 courseRepository.save(course);
