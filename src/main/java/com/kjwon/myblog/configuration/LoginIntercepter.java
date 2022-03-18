@@ -11,25 +11,31 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginIntercepter implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal);
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            System.out.println(principal);
 
-        UserDetails userDetails;
+            UserDetails userDetails;
 
-        boolean isLogin = !principal.equals("anonymousUser");
+            boolean isLogin = !principal.equals("anonymousUser");
 
-        String userName = null;
-        String userId = null;
+            String userName = null;
+            String userId = null;
 
-        if(isLogin) {
-            userDetails = (UserDetails) principal;
-            userId = userDetails.getUsername();
-            userName = userId.split("@")[0];
+            if (isLogin) {
+                userDetails = (UserDetails) principal;
+                userId = userDetails.getUsername();
+                userName = userId.split("@")[0];
+            }
+            request.setAttribute("isLogin", isLogin);
+            request.setAttribute("userId", userId);
+            request.setAttribute("userName", userName);
         }
-        request.setAttribute("isLogin",isLogin);
-        request.setAttribute("userId",userId);
-        request.setAttribute("userName",userName);
-
+        catch (Exception e){
+            request.setAttribute("isLogin", 0);
+            request.setAttribute("userId", 0);
+            request.setAttribute("userName", 0);
+        }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
