@@ -18,7 +18,7 @@ import java.util.List;
 public class CourseDto {
     
     Long id;
-    long categoryId;
+    long categoryeeId;
     String imagePath;
     String keyword;
     String subject;
@@ -38,7 +38,7 @@ public class CourseDto {
     public static CourseDto of(Course course) {
     return CourseDto.builder()
             .id(course.getId())
-            .categoryId(course.getCategoryId())
+            .categoryeeId(course.getCategoryeeId())
             .imagePath(course.getImagePath())
             .keyword(course.getKeyword())
             .subject(course.getSubject())

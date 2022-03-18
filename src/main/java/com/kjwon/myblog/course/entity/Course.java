@@ -1,5 +1,6 @@
 package com.kjwon.myblog.course.entity;
 
+import com.kjwon.myblog.admin.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     
-    long categoryId;
+    long categoryeeId;
     
     String imagePath;
     String keyword;
@@ -46,5 +47,9 @@ public class Course {
     @OneToMany
     @JoinColumn(name = "comment_id")
     private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 
 }

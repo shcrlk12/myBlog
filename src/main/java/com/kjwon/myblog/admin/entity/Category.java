@@ -27,7 +27,6 @@ public class Category {
     int sortValue;
     boolean usingYn;
 
-    @OneToMany
-    @JoinColumn(name = "course_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
     private List<Course> courseList = new ArrayList<>();
 }

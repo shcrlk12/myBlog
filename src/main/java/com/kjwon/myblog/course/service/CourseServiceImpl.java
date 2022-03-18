@@ -58,7 +58,7 @@ public class CourseServiceImpl implements CourseService {
 
                 Course course = Course.builder()
                         .writer(userName)
-                        .categoryId(parameter.getCategoryId())
+                        .categoryeeId(parameter.getCategoryId())
                         .subject(parameter.getSubject())
                         .keyword(parameter.getKeyword())
                         .summary(parameter.getSummary())
@@ -89,7 +89,7 @@ public class CourseServiceImpl implements CourseService {
 
         Course course = optionalCourse.get();
         course.setWriter(userName);
-        course.setCategoryId(parameter.getCategoryId());
+        course.setCategoryeeId(parameter.getCategoryId());
         course.setSubject(parameter.getSubject());
         course.setKeyword(parameter.getKeyword());
         course.setSummary(parameter.getSummary());

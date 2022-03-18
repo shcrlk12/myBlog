@@ -134,7 +134,7 @@ public class CategoryServiceImpl implements CategoryService {
         for(Course c : courseList){
             CourseDto courseDto = CourseDto.of(c);
 
-            Optional<Category> categoryOptional = categoryRepository.findById(c.getCategoryId());
+            Optional<Category> categoryOptional = categoryRepository.findById(c.getCategoryeeId());
             Category category = categoryOptional.get();
 
             courseDto.setCategoryName(category.getCategoryName());
