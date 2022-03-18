@@ -115,26 +115,28 @@ public class AdminCourseController extends BaseController {
             String originalFilename = file.getOriginalFilename();
 
             String basePath = "/usr/local/tomcat";
-            String baseLocalPath = "/img/blog/thumbnail";
-            String baseUrlPath = "/img/blog/thumbnail";
+            String baseLocalPath = "/img/blog/thumbnail/";
+            String baseUrlPath = "/img/blog/thumbnail/";
             
             String[] arrFilename = getNewSaveFile(baseLocalPath, baseUrlPath, originalFilename);
     
             saveFilename = arrFilename[0];
             urlFilename = arrFilename[1];
-            log.info("blog thumnail save to " + basePath + saveFilename);
+            log.info("blog thumnail save to " + basePath + baseLocalPath + originalFilename);
 
             try {
-                File newFile = new File(basePath + saveFilename);
+                File newFile = new File( basePath + baseLocalPath + originalFilename);
                 FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
             } catch (IOException e) {
                 log.info("############################ - 1");
                 log.info(e.getMessage());
             }
+
+            parameter.setFilename(basePath + baseLocalPath + originalFilename);
+            parameter.setUrlFilename(urlFilename);
         }
         
-        parameter.setFilename(saveFilename);
-        parameter.setUrlFilename(urlFilename);
+
         
         boolean editMode = request.getRequestURI().contains("/edit");
         
