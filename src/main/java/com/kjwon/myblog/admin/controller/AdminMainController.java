@@ -35,12 +35,12 @@ public class AdminMainController {
         log.debug("file name " + file.getOriginalFilename());
 
         File newFile = new File("/usr/local/tomcat/img/blog/thumbnail/default.jpg");
-
-        if(newFile.exists())
-            if(newFile.delete())
-                log.info("default 파일 업로드 성공");
-            else
-                log.info("default 파일 업로드 실패");
+//
+//        if(newFile.exists())
+//            if(newFile.delete())
+//                log.info("default 파일 업로드 성공");
+//            else
+//                log.info("default 파일 업로드 실패");
 
         FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
 
