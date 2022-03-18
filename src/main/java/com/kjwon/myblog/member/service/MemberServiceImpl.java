@@ -6,7 +6,10 @@ import com.kjwon.myblog.admin.entity.EmailTemplate;
 import com.kjwon.myblog.admin.repository.EmailTemplateRepository;
 import com.kjwon.myblog.components.MailComponents;
 import com.kjwon.myblog.member.entity.Member;
+import com.kjwon.myblog.member.exception.MemberNotEmailAuthException;
+import com.kjwon.myblog.member.exception.MemberStopUserException;
 import com.kjwon.myblog.member.model.MemberInput;
+import com.kjwon.myblog.member.model.ResetPasswordInput;
 import com.kjwon.myblog.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -101,37 +104,37 @@ public class MemberServiceImpl implements MemberService {
         return true;
     }
     
-//    @Override
-//    public boolean sendResetPassword(ResetPasswordInput parameter) {
-//
-//        Optional<Member> optionalMember = memberRepository.findByUserIdAndUserName(parameter.getUserId(), parameter.getUserName());
-//        if (!optionalMember.isPresent()) {
-//            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
-//        }
-//
-//        Member member = optionalMember.get();
-//
-//        String uuid = UUID.randomUUID().toString();
-//
-//        member.setResetPasswordKey(uuid);
-//        member.setResetPasswordLimitDt(LocalDateTime.now().plusDays(1));
-//        memberRepository.save(member);
-//
-//        Optional<EmailTemplate> emailTemplateOptional = emailTemplateRepository.findById("RESET_PASSWORD");
-//
-//        if(emailTemplateOptional.isEmpty())
-//            return false;
-//
-//        EmailTemplate emailTemplate = emailTemplateOptional.get();
-//
-//        String email = parameter.getUserId();
-//        String subject = emailTemplate.getMailTitle();
-//        String text = emailTemplate.getMailContext().replace("${uuid}", uuid);
-//
-//        mailComponents.sendMail(email, subject, text);
-//
-//        return false;
-//    }
+    @Override
+    public boolean sendResetPassword(ResetPasswordInput parameter) {
+
+        Optional<Member> optionalMember = memberRepository.findByUserIdAndUserName(parameter.getUserId(), parameter.getUserName());
+        if (!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        String uuid = UUID.randomUUID().toString();
+
+        member.setResetPasswordKey(uuid);
+        member.setResetPasswordLimitDt(LocalDateTime.now().plusDays(1));
+        memberRepository.save(member);
+
+        Optional<EmailTemplate> emailTemplateOptional = emailTemplateRepository.findById("RESET_PASSWORD");
+
+        if(!emailTemplateOptional.isPresent())
+            return false;
+
+        EmailTemplate emailTemplate = emailTemplateOptional.get();
+
+        String email = parameter.getUserId();
+        String subject = emailTemplate.getMailTitle();
+        String text = emailTemplate.getMailContext().replace("${uuid}", uuid);
+
+        mailComponents.sendMail(email, subject, text);
+
+        return false;
+    }
     
 //    @Override
 //    public List<MemberDto> list(MemberParam parameter) {
@@ -282,23 +285,23 @@ public class MemberServiceImpl implements MemberService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<Member> optionalMember = memberRepository.findById(username);
-//        if (!optionalMember.isPresent()) {
-//            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
-//        }
-//
+        if (!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
         Member member = optionalMember.get();
-//
-//        if (Member.MEMBER_STATUS_REQ.equals(member.getUserStatus())) {
-//            throw new MemberNotEmailAuthException("이메일 활성화 이후에 로그인을 해주세요.");
-//        }
-//
-//        if (Member.MEMBER_STATUS_STOP.equals(member.getUserStatus())) {
-//            throw new MemberStopUserException("정지된 회원 입니다.");
-//        }
-//
-//        if (Member.MEMBER_STATUS_WITHDRAW.equals(member.getUserStatus())) {
-//            throw new MemberStopUserException("탈퇴된 회원 입니다.");
-//        }
+
+        if (Member.MEMBER_STATUS_REQ.equals(member.getUserStatus())) {
+            throw new MemberNotEmailAuthException("이메일 활성화 이후에 로그인을 해주세요.");
+        }
+
+        if (Member.MEMBER_STATUS_STOP.equals(member.getUserStatus())) {
+            throw new MemberStopUserException("정지된 회원 입니다.");
+        }
+
+        if (Member.MEMBER_STATUS_WITHDRAW.equals(member.getUserStatus())) {
+            throw new MemberStopUserException("탈퇴된 회원 입니다.");
+        }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));

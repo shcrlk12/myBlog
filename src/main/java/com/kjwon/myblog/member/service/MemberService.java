@@ -3,6 +3,7 @@ package com.kjwon.myblog.member.service;
 
 import com.kjwon.myblog.admin.dto.MemberDto;
 import com.kjwon.myblog.member.model.MemberInput;
+import com.kjwon.myblog.member.model.ResetPasswordInput;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface MemberService extends UserDetailsService {
@@ -17,7 +18,7 @@ public interface MemberService extends UserDetailsService {
 //    /**
 //     * 입력한 이메일로 비밀번호 초기화 정보를 전송
 //     */
-//    boolean sendResetPassword(ResetPasswordInput parameter);
+    boolean sendResetPassword(ResetPasswordInput parameter);
 //
 //
 //    /**

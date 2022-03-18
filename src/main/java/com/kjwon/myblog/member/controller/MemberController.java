@@ -34,15 +34,15 @@ public class MemberController {
         return "member/find_password";
     }
 
-//    @PostMapping("/member/find-password")
-//    public String findPasswordSubmit(Model model, ResetPasswordInput parameter) {
-//
-//        boolean result = memberService.sendResetPassword(parameter);
-//        model.addAttribute("result", result);
-//
-//        return "member/find_password_result";
-//    }
-//
+    @PostMapping("/member/find-password")
+    public String findPasswordSubmit(Model model, ResetPasswordInput parameter) {
+
+        boolean result = memberService.sendResetPassword(parameter);
+        model.addAttribute("result", result);
+
+        return "member/find_password_result";
+    }
+
     @GetMapping("/member/register")
     public String register() {
 
