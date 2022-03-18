@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -115,7 +116,7 @@ public class AdminCourseController extends BaseController {
         String baseLocalPath = "/img/blog/thumbnail/";
         String baseUrlPath = "/img/blog/thumbnail/";
 
-        if (file != null) {
+        if(!Objects.equals(file.getOriginalFilename(), "")) {
             String originalFilename = file.getOriginalFilename();
 
 
