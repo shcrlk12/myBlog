@@ -44,15 +44,15 @@ public class CourseController extends BaseController {
         List<CourseDto> list = courseService.frontList(parameter, principal.getName());
         model.addAttribute("list", list);
 
-//        List<CategoryDto> categoryList = categoryService.frontList(principal.getName());
-//
-//        int totalCount = 0;
-//        for (CategoryDto categoryDto : categoryList){
-//            totalCount += categoryDto.getCourseCount();
-//        }
-//
-//        model.addAttribute("courseTotalCount", totalCount);
-//        model.addAttribute("categoryList", categoryList);
+        List<CategoryDto> categoryList = categoryService.frontList(principal.getName());
+
+        int totalCount = 0;
+        for (CategoryDto categoryDto : categoryList){
+            totalCount += categoryDto.getCourseCount();
+        }
+
+        model.addAttribute("courseTotalCount", totalCount);
+        model.addAttribute("categoryList", categoryList);
 
         return "course/index";
     }

@@ -111,15 +111,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> frontList(String userName) {
 
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
         List<Category> categories = getCategory(userName);
 
-        List<CategoryDto> categoryDtoList = CategoryDto.of(categories);
+        for(int i =0; i < categories.size(); i++){
+            Category category = categories.get(i);
+            CategoryDto categoryDto = CategoryDto.of(category);
 
-        int index =0;
-        for(Category category : categories){
-            categoryDtoList.get(index).setCourseCount(category.getCourseList().size());
-            index++;
+            categoryDto.setCourseCount(category.getCourseList().size());
+            categoryDtoList.add(categoryDto);
         }
+
         return categoryDtoList;
     }
 
