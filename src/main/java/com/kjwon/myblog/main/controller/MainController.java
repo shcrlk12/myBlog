@@ -4,6 +4,7 @@ package com.kjwon.myblog.main.controller;
 import com.kjwon.myblog.admin.entity.Banner;
 import com.kjwon.myblog.admin.service.BannerService;
 import com.kjwon.myblog.components.MailComponents;
+import com.kjwon.myblog.course.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

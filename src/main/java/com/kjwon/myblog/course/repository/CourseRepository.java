@@ -14,5 +14,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findByCategoryeeIdAndWriter(long categoryId, String writer);
 
+    @Query("SELECT distinct c FROM Course c join fetch c.category")
+    public List<Course> findAllBlogAndCategory();
 
 }

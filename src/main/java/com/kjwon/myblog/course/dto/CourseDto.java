@@ -1,5 +1,6 @@
 package com.kjwon.myblog.course.dto;
 
+import com.kjwon.myblog.admin.entity.Category;
 import com.kjwon.myblog.course.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +36,7 @@ public class CourseDto {
     long totalCount;
     long seq;
 
+    Category category;
     public static CourseDto of(Course course) {
     return CourseDto.builder()
             .id(course.getId())
@@ -48,6 +50,7 @@ public class CourseDto {
             .udtDt(course.getUdtDt())
             .filename(course.getFilename())
             .urlFilename(course.getUrlFilename())
+            .category(course.getCategory())
             .build();
     }
     
