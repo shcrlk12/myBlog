@@ -4,7 +4,9 @@ import com.kjwon.myblog.admin.entity.Banner;
 import com.kjwon.myblog.admin.model.BannerInput;
 import com.kjwon.myblog.admin.model.MemberParam;
 import com.kjwon.myblog.admin.service.BannerService;
+import com.kjwon.myblog.admin.service.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -21,6 +23,8 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class AdminBannerController {
+    private  static final org.apache.log4j.Logger log = Logger.getLogger(CategoryServiceImpl.class);
+
     private final BannerService bannerService;
 
     @GetMapping("/admin/banner/list.do")
@@ -51,20 +55,22 @@ public class AdminBannerController {
     public String bannerAddPost(BannerInput bannerInput, MultipartFile file, HttpServletRequest request) {
         String localDirPath = "/usr/local/tomcat";
 
-        String resourecePath = "banners/";
+        String resourecePath = "/banners";
 
         String localImgPath = localDirPath + resourecePath + file.getOriginalFilename();
 
         bannerInput.setBannerPath(localImgPath);
         bannerInput.setBannerAlterText(file.getOriginalFilename());
-        bannerInput.setBannerResPath("/img/" +resourecePath + file.getOriginalFilename());
+        bannerInput.setBannerResPath("/img" +resourecePath + file.getOriginalFilename());
 
         if(file != null) {
+            log.info("banner save to " + localImgPath);
+
             File newFile = new File(localImgPath);
             try {
                 FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                log.error(e.getMessage());
             }
         }
 
