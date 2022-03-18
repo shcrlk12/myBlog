@@ -107,16 +107,18 @@ public class AdminCourseController extends BaseController {
     public String addSubmit(Model model, HttpServletRequest request
                             , MultipartFile file, Principal principal
             , CourseInput parameter) {
-    
+
         String saveFilename = "";
         String urlFilename = "";
-        
+
+        String basePath = "/usr/local/tomcat";
+        String baseLocalPath = "/img/blog/thumbnail/";
+        String baseUrlPath = "/img/blog/thumbnail/";
+
         if (file != null) {
             String originalFilename = file.getOriginalFilename();
 
-            String basePath = "/usr/local/tomcat";
-            String baseLocalPath = "/img/blog/thumbnail/";
-            String baseUrlPath = "/img/blog/thumbnail/";
+
             
             String[] arrFilename = getNewSaveFile(baseLocalPath, baseUrlPath, originalFilename);
     
@@ -134,6 +136,10 @@ public class AdminCourseController extends BaseController {
 
             parameter.setFilename(baseLocalPath + originalFilename);
             parameter.setUrlFilename(baseLocalPath + originalFilename);
+        }
+        else{
+            parameter.setFilename(baseLocalPath + "default.png");
+            parameter.setUrlFilename(baseLocalPath + "default.png");
         }
         
 
