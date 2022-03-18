@@ -10,6 +10,8 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public void Test(Exception e){
-        log.error(e.getStackTrace());
+        log.error(e.getMessage(), e);
+        log.error(e.getLocalizedMessage(),e);
+
     }
 }
