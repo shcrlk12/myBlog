@@ -125,22 +125,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CourseDto> findAllCourse() {
-//        List<Course> courseList = courseRepository.findAll();
-//        List<CourseDto> courseDtoList = new ArrayList<>();
         List<Course> courseList = courseRepository.findAllBlogAndCategory();
 
         if (courseList.isEmpty())
             return Collections.emptyList();
-//
-//        for(Course c : courseList){
-//            CourseDto courseDto = CourseDto.of(c);
-//
-//            Optional<Category> categoryOptional = categoryRepository.findById(c.getCategoryeeId());
-//            Category category = categoryOptional.get();
-//
-//            courseDto.setCategoryName(category.getCategoryName());
-//            courseDtoList.add(courseDto);
-//        }
+
         return CourseDto.of(courseList);
     }
 }
