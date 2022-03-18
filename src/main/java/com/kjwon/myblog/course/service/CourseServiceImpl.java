@@ -159,27 +159,27 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseDto> frontList(CourseParam parameter, String userName) {
 
-//        List<Category> categories = getCategory(userName);
-//        List<Course> courseList = new ArrayList<>();
-        List<Course> courseList = courseRepository.findUserBlogAndCategory(userName);
 //
-//        if(parameter.getCategoryId() < 1) {
+
 //
-//            for (Category category : categories) {
-//                List<Course> coursies = category.getCourseList();
-//                courseList.addAll(coursies);
-//            }
-//            return CourseDto.of(courseList);
-//        }
-//
-//        for (Category category : categories) {
-//            if(category.getId() == parameter.getCategoryId()) {
-//                List<Course> coursies = category.getCourseList();
-//
-//                courseList.addAll(coursies);
-//                break;
-//            }
-//        }
+        if(parameter.getCategoryId() < 1) {
+
+            List<Course> courseList = courseRepository.findUserBlogAndCategory(userName);
+
+            return CourseDto.of(courseList);
+        }
+
+        List<Category> categories = getCategory(userName);
+        List<Course> courseList = new ArrayList<>();
+
+        for (Category category : categories) {
+            if(category.getId() == parameter.getCategoryId()) {
+                List<Course> coursies = category.getCourseList();
+
+                courseList.addAll(coursies);
+                break;
+            }
+        }
         return CourseDto.of(courseList);
 
     }
