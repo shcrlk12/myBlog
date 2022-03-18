@@ -61,7 +61,7 @@
                     <select name="categoryId" required>
                         <option value=""> 카테고리 선택 </option>
                         <option
-                                th:selected="${detail.categoryId == x.id}"
+                                th:selected="${detail.categoryeeId == x.id}"
                                 th:each="x : ${category}" th:value="${x.id}" th:text="${x.categoryName}"> 기획 </option>
                     </select>
                 </td>

@@ -39,13 +39,13 @@ public class AdminCourseController extends BaseController {
     @GetMapping(value = {"/course/add", "/course/edit"})
     public String add(Model model, HttpServletRequest request
             , CourseInput parameter, Principal principal) {
-        
+
         //카테고리 정보를 내려줘야 함.
         model.addAttribute("category", categoryService.list(principal.getName()));
-        
+
         boolean editMode = request.getRequestURI().contains("/edit");
         CourseDto detail = new CourseDto();
-        
+
         if (editMode) {
             long id = parameter.getId();
             CourseDto existCourse = courseService.getById(id);
@@ -56,10 +56,10 @@ public class AdminCourseController extends BaseController {
             }
             detail = existCourse;
         }
-        
+
         model.addAttribute("editMode", editMode);
         model.addAttribute("detail", detail);
-        
+
         return "course/add";
     }
     
