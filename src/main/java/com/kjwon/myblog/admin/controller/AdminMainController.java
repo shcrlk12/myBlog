@@ -42,7 +42,7 @@ public class AdminMainController {
             else
                 log.info("default 파일 업로드 실패");
 
-//        FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
+        FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
 
         return "admin/blog-default-img";
     }
