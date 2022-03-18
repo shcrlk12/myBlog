@@ -49,9 +49,9 @@ public class AdminBannerController {
 
     @PostMapping(value = {"/admin/banner/add.do", "/admin/banner/edit.do"})
     public String bannerAddPost(BannerInput bannerInput, MultipartFile file, HttpServletRequest request) {
-        String localDirPath = "C:/dev/spring/(10-3)김정원 - fastlms3/fastlms3/src/main/resources/static";
+        String localDirPath = "/usr/local/tomcat";
 
-        String resourecePath = "/img/blog/banner/";
+        String resourecePath = "/img/banners/";
 
         String localImgPath = localDirPath + resourecePath + file.getOriginalFilename();
 

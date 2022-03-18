@@ -13,6 +13,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN rm -r /usr/local/tomcat/webapps/ROOT
 RUN mkdir /usr/local/tomcat/blogLog
+RUN mkdir /usr/local/tomcat/banners
 
 #FROM ubuntu:18.04
 #ARG WAR_FILE=target/*.war
