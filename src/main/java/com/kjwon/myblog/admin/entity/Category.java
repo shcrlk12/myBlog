@@ -1,6 +1,7 @@
 package com.kjwon.myblog.admin.entity;
 
 
+import com.kjwon.myblog.course.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +26,8 @@ public class Category {
 
     int sortValue;
     boolean usingYn;
-//
-//    @OneToMany
-//    @JoinColumn(name = "course_id")
-//    private List<Course> courseList = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "course_id")
+    private List<Course> courseList = new ArrayList<>();
 }

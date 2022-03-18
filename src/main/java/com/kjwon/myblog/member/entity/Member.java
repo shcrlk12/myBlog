@@ -1,5 +1,6 @@
 package com.kjwon.myblog.member.entity;
 
+import com.kjwon.myblog.admin.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,8 +47,8 @@ public class Member implements MemberCode {
     private String addr;
     private String addrDetail;
 
-//    @OneToMany
-//    @JoinColumn(name = "category_id")
-//    private List<Category> categoryList = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "category_id")
+    private List<Category> categoryList = new ArrayList<>();
     
 }

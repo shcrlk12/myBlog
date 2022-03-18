@@ -18,9 +18,9 @@ public class MailComponents {
     public void sendMailTest() {
     
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("shcrlk12@naver.com");
-        msg.setSubject("안녕하세요. 메일 테스트 입니다.");
-        msg.setText(" 안녕하세요. 메일테스트 입니다. 반갑습니다. ");
+        msg.setTo("satcop@naver.com");
+        msg.setSubject("안녕하세요. 제로베이스 입니다.");
+        msg.setText(" 안녕하세요. 제로베이스 입니다. 방갑습니다. ");
         
         javaMailSender.send(msg);
     }

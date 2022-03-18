@@ -12,7 +12,7 @@ ENV TZ=Asia/Seoul
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN rm -r /usr/local/tomcat/webapps/ROOT
-EXPOSE 80
+RUN mkdir /usr/local/tomcat/blogLog
 
 #FROM ubuntu:18.04
 #ARG WAR_FILE=target/*.war

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginIntercepter implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        try {
+        try{
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             System.out.println(principal);
 
@@ -22,19 +22,19 @@ public class LoginIntercepter implements HandlerInterceptor {
             String userName = null;
             String userId = null;
 
-            if (isLogin) {
+            if(isLogin) {
                 userDetails = (UserDetails) principal;
                 userId = userDetails.getUsername();
                 userName = userId.split("@")[0];
             }
-            request.setAttribute("isLogin", isLogin);
-            request.setAttribute("userId", userId);
-            request.setAttribute("userName", userName);
-        }
-        catch (Exception e){
-            request.setAttribute("isLogin", 0);
-            request.setAttribute("userId", 0);
-            request.setAttribute("userName", 0);
+            request.setAttribute("isLogin",isLogin);
+            request.setAttribute("userId",userId);
+            request.setAttribute("userName",userName);
+
+        }catch (Exception e){
+            request.setAttribute("isLogin",0);
+            request.setAttribute("userId",0);
+            request.setAttribute("userName",0);
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
@@ -46,6 +46,6 @@ public class LoginIntercepter implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+        HandlerInterceptor.super.afterCompletion(request, response, handler, ex); //배포테11스트
     }
 }
