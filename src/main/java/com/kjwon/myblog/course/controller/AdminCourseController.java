@@ -132,7 +132,7 @@ public class AdminCourseController extends BaseController {
                 log.info(e.getMessage());
             }
 
-            parameter.setFilename(basePath + baseLocalPath + originalFilename);
+            parameter.setFilename(baseLocalPath + originalFilename);
             parameter.setUrlFilename(urlFilename);
         }
         
