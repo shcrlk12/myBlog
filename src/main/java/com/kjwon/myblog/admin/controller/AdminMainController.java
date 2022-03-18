@@ -1,6 +1,8 @@
 package com.kjwon.myblog.admin.controller;
 
 
+import com.kjwon.myblog.main.controller.CustomExceptionHandler;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +15,9 @@ import java.io.IOException;
 
 @Controller
 public class AdminMainController {
-    
-    
+    private  static final Logger log = Logger.getLogger(AdminMainController.class);
+
+
     @GetMapping("/admin/main.do")
     public String main() {
         
@@ -29,6 +32,7 @@ public class AdminMainController {
     @PostMapping("/admin/blog/default.do")
     public String postBlogDefaultImageChange(MultipartFile file) throws IOException {
 
+        log.debug("file name " + file.getOriginalFilename());
         File newFile = new File("/usr/local/tomcat/img/blog/thumbnail/default.jpg");
         FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
 
