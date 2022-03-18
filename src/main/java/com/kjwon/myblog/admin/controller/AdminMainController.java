@@ -2,7 +2,14 @@ package com.kjwon.myblog.admin.controller;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @Controller
 public class AdminMainController {
@@ -16,6 +23,15 @@ public class AdminMainController {
 
     @GetMapping("/admin/blog/default.do")
     public String blogDefaultImageChange(){
+        return "admin/blog-default-img";
+    }
+
+    @PostMapping("/admin/blog/default.do")
+    public String postBlogDefaultImageChange(MultipartFile file) throws IOException {
+
+        File newFile = new File("/usr/local/tomcat/img/blog/thumbnail/default.jpg");
+        FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
+
         return "admin/blog-default-img";
     }
 

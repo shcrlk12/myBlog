@@ -8,6 +8,24 @@
     <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
     <h1>관리자 메인 화면</h1>
 
+    <form method="post" enctype="multipart/form-data">
+        <table>
+            <tbody>
+            <tr>
+                <th>기본 이미지</th>
+                <td>
+                    <input type="file" name="file" />
+                </td>
+            </tr>
 
+            </tbody>
+        </table>
+
+        <div class="buttons">
+             <button type="submit"> 등록 하기 </button>
+            <a href="/admin/blog/default.do"> 목록 이동 </a>
+        </div>
+
+    </form>
 </body>
 </html>
