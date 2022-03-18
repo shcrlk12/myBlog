@@ -53,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         , "/member/email-auth"
                         , "/member/find-password"
                         , "/member/reset/password"
-                        , "/static/img/blog/banner/"
+                        , "/usr/local/tomcat/banners"
                 )
                 .permitAll();
     
