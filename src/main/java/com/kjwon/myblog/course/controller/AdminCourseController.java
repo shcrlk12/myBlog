@@ -2,12 +2,14 @@ package com.kjwon.myblog.course.controller;
 
 
 import com.kjwon.myblog.admin.service.CategoryService;
+import com.kjwon.myblog.admin.service.CategoryServiceImpl;
 import com.kjwon.myblog.course.dto.CourseDto;
 import com.kjwon.myblog.course.model.CourseInput;
 import com.kjwon.myblog.course.model.CourseParam;
 import com.kjwon.myblog.course.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +28,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class AdminCourseController extends BaseController {
-    
+    private  static final org.apache.log4j.Logger log = Logger.getLogger(CategoryServiceImpl.class);
+
     private final CourseService courseService;
     private final CategoryService categoryService;
     
@@ -120,9 +122,7 @@ public class AdminCourseController extends BaseController {
     
             saveFilename = arrFilename[0];
             urlFilename = arrFilename[1];
-            System.out.println("saveFilename");
-            System.out.println(saveFilename);
-            System.out.println(urlFilename);
+            log.info("blog thumnail save to " + basePath + saveFilename);
 
             try {
                 File newFile = new File(basePath + saveFilename);
