@@ -112,7 +112,7 @@ public class AdminCourseController extends BaseController {
         if (file != null) {
             String originalFilename = file.getOriginalFilename();
 
-            String basePath = "C:/dev/spring/fastlms3_blog/fastlms3/src/main/resources/static";
+            String basePath = "/usr/local/tomcat";
             String baseLocalPath = "/img/blog/thumbnail";
             String baseUrlPath = "/img/blog/thumbnail";
             
