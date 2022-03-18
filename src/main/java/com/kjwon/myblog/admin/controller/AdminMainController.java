@@ -33,7 +33,7 @@ public class AdminMainController {
     public String postBlogDefaultImageChange(MultipartFile file) throws IOException {
 
         log.debug("file name " + file.getOriginalFilename());
-        File newFile = new File("/usr/local/tomcat/img/blog/thumbnail/default.jpg");
+        File newFile = new File("/usr/local/tomcat/img/blog/thumbnail/default2.jpg");
         FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
 
         return "admin/blog-default-img";
