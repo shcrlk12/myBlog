@@ -13,6 +13,12 @@ public class AdminMainController {
         
         return "admin/main";
     }
+
+    @GetMapping("/admin/blog/default.do")
+    public String blogDefaultImageChange(){
+        return "admin/blog-default-img";
+    }
+
     
     
     

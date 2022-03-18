@@ -138,8 +138,8 @@ public class AdminCourseController extends BaseController {
             parameter.setUrlFilename(baseLocalPath + originalFilename);
         }
         else{
-            parameter.setFilename(baseLocalPath + "default.png");
-            parameter.setUrlFilename(baseLocalPath + "default.png");
+            parameter.setFilename(baseLocalPath + "default.jpg");
+            parameter.setUrlFilename(baseLocalPath + "default.jpg");
         }
         
 
