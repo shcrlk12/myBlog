@@ -55,13 +55,13 @@ public class AdminBannerController {
     public String bannerAddPost(BannerInput bannerInput, MultipartFile file, HttpServletRequest request) {
         String localDirPath = "/usr/local/tomcat";
 
-        String resourecePath = "/banners/";
+        String resourecePath = "/img/banners/";
 
         String localImgPath = localDirPath + resourecePath + file.getOriginalFilename();
 
         bannerInput.setBannerPath(localImgPath);
         bannerInput.setBannerAlterText(file.getOriginalFilename());
-        bannerInput.setBannerResPath("/img" +resourecePath + file.getOriginalFilename());
+        bannerInput.setBannerResPath(resourecePath + file.getOriginalFilename());
 
         if(file != null) {
             log.info("banner save to " + localImgPath);
