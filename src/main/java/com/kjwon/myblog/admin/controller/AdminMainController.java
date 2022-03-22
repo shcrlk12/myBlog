@@ -46,8 +46,4 @@ public class AdminMainController {
 
         return "admin/blog-default-img";
     }
-
-    
-    
-    
 }
