@@ -3,6 +3,7 @@ package com.kjwon.myblog.acrticle.Dto;
 import com.kjwon.myblog.acrticle.entity.Article;
 import com.kjwon.myblog.admin.dto.CategoryDto;
 import com.kjwon.myblog.admin.entity.Category;
+import com.kjwon.myblog.member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class ArticleDto {
     private String title;
     private String contents;
     private Long categoryId;
+    private Member member;
     private LocalDateTime regDt;
 
     public static List<ArticleDto> of (List<Article> article) {
@@ -40,6 +42,7 @@ public class ArticleDto {
                 .contents(article.getContents())
                 .categoryId(article.getCategory().getId())
                 .regDt(article.getRegDt())
+                .member(article.getMember())
                 .build();
     }
 }

@@ -14,17 +14,21 @@ public class ArticleUtil {
 
         for (ArticleDto articleDto : articleDtoList) {
 
-            String sb = "<a href = \"" +
+            String sb = "<td>" +
+                    "<a href = \"" +
                     articleType +
                     "/" +
                     articleDto.getId() +
                     "\">" +
                     articleDto.getTitle() +
                     "</a>" +
-                    "<span>" +
+                    "</td>" +
+                    "<td>" +
+                    articleDto.getMember().getUserId() +
+                    "</td>" +
+                    "<td>" +
                     articleDto.getRegDt() +
-                    "</span>";
-
+                    "</td>";
             articleList.add(sb);
         }
 

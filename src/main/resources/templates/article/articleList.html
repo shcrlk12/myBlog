@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset = "UTF-8">
+    <style>
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th, table td {
+            border: solid 1px #000;
+        }
+
+    </style>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+<a href = "/article/write_article">글 작성</a>
+
+<table>
+    <tr>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성 일</th>
+    </tr>
+    <tr th:each="x:${articleList}" th:utext="${x}">
+
+    </tr>
+</table>
+</body>
+</html>

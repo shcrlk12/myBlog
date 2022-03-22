@@ -41,7 +41,7 @@ public class ArticleController {
 
         model.addAttribute("articleList", articleOverview(articleList, articleType));
 
-        return "article/" + articleType;
+        return "article/articleList";
     }
 
     @GetMapping("article/{articleType}/{id}")
