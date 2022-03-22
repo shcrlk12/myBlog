@@ -16,12 +16,14 @@
 
         .sliderBanner{
             height: 300px;
+            float: right;
         }
 
         .overviews{
             display: grid;
             grid-template-rows: repeat(2, 200px);
             grid-template-columns: repeat(2, 200px);
+            float: left;
         }
     </style>
 </head>
@@ -47,10 +49,10 @@
 
     <div>
         <div class="overviews">
-            <div class="overview">실시간 인기 게시판</div>
-            <div class="overview">일간 랭킹</div>
-            <div class="overview">자유 게시판</div>
-            <div class="overview">엽기 게시판</div>
+            <div class="overview"><a href = "article/popular_article">실시간 인기 게시판</a></div>
+            <div class="overview"><a href = "article/article_rank?type=day">일간 랭킹</a></div>
+            <div class="overview"><a href = "article/free_article">자유 게시판</a></div>
+            <div class="overview"><a href = "article/fun_article">엽기 게시판</a></div>
         </div>
         <div class="sliderBanner">
             <div class="home__slider banner">
