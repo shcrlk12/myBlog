@@ -1,6 +1,7 @@
 package com.kjwon.myblog.acrticle.controller;
 
 import com.kjwon.myblog.acrticle.Dto.ArticleDto;
+import com.kjwon.myblog.acrticle.entity.Article;
 import com.kjwon.myblog.acrticle.service.ArticleService;
 import com.kjwon.myblog.admin.dto.CategoryDto;
 import com.kjwon.myblog.admin.service.CategoryService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +24,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 
+import static com.kjwon.myblog.util.ArticleUtil.articleOverview;
+
 @RequiredArgsConstructor
 @Controller
 public class ArticleController {
@@ -29,24 +33,26 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CategoryService categoryService;
 
-    @GetMapping("article/popular_article")
-    public String popularArticle(){
-        return "article/popular_article";
+    @GetMapping("article/{articleType}")
+    public String articleList(Model model,
+                              @PathVariable("articleType") String articleType){
+
+        List<ArticleDto> articleList = articleService.frontList(articleType);
+
+        model.addAttribute("articleList", articleOverview(articleList, articleType));
+
+        return "article/" + articleType;
     }
 
-    @GetMapping("article/article_rank")
-    public String articleRank(){
-        return "article/article_rank";
-    }
+    @GetMapping("article/{articleType}/{id}")
+    public String datailArticle(Model model,
+                                @PathVariable("id") Long id){
 
-    @GetMapping("article/free_article")
-    public String freeArticle(){
-        return "article/free_article";
-    }
+        ArticleDto articleDto = articleService.detail(id);
 
-    @GetMapping("article/fun_article")
-    public String funArticle(){
-        return "article/fun_article";
+        model.addAttribute("articleDto", articleDto);
+
+        return "article/detail";
     }
 
     @GetMapping("article/write_article")

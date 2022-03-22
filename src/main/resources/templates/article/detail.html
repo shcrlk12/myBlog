@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글</title>
+
+    <style>
+        .clearfix::after{
+            clear: both;
+            content: "";
+            display: block;
+        }
+        .comment-left{
+            float:left;
+            width: 20%;
+        }
+
+        .write-comment{
+            width:70%;
+        }
+    </style>
+</head>
+<body>
+<h1>글 </h1>
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+<div>
+    <h2>제목: <span th:text="${articleDto.title}"></span></h2>
+    <div th:utext="${articleDto.contents}">
+    </div>
+
+<!--    <div>-->
+<!--        <form id="submitForm" method="post">-->
+<!--            <input type="hidden" name="id" th:value="${detail.id}"/>-->
+<!--            <a href="/course">글 목록</a>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    <div id="comment" class="clearfix">-->
+<!--        <div>-->
+<!--            <form method="post">-->
+<!--                <div class="comment-left">덧글 쓰기</div>-->
+<!--                <textarea class="write-comment" name = "commentText" id = "text" cols = "30" rows = "10"></textarea>-->
+<!--                <button type="submit">댓글 작성</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div th:each="x : ${comments}" style="border: solid 1px black">-->
+<!--        <div class="clearfix">-->
+<!--            <div th:text="${x.userName}" style="float: left"></div>-->
+<!--            <div th:text="${x.regDt}" style="float: right"></div>-->
+<!--        </div>-->
+<!--        <div th:text="${x.text}" style="height: 70px; border-top: solid 1px black; box-sizing: border-box"></div>-->
+<!--        <button th:if="${x.userName == userId}">덧글 삭제</button>-->
+<!--    </div>-->
+</div>
+</body>
+</html>

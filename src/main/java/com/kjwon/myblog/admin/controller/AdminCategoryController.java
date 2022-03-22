@@ -31,9 +31,9 @@ public class AdminCategoryController {
     
     
     @PostMapping("/admin/category/add.do")
-    public String add(Model model, CategoryInput parameter, Principal principal) {
+    public String add(Model model, CategoryInput parameter) {
     
-        boolean result = categoryService.add(parameter.getCategoryName(), principal.getName());
+        boolean result = categoryService.add(parameter);
     
         return "redirect:/admin/category/list.do";
     }

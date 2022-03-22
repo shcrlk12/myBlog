@@ -6,6 +6,11 @@
 </head>
 <body>
 <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+<a href = "/article/write_article">글 작성</a>
+
+<div th:each="x:${articleList}">
+    <div th:utext="${x}"></div>
+</div>
 
 </body>
 </html>

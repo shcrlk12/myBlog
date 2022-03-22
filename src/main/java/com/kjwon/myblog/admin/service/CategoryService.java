@@ -1,5 +1,6 @@
 package com.kjwon.myblog.admin.service;
 
+import com.kjwon.myblog.acrticle.Dto.ArticleDto;
 import com.kjwon.myblog.admin.dto.CategoryDto;
 import com.kjwon.myblog.admin.entity.Category;
 import com.kjwon.myblog.admin.model.CategoryInput;
@@ -15,7 +16,7 @@ public interface CategoryService {
     /**
      * 카테고리 신규 추가
      */
-    boolean add(String categoryName, String userName);
+    boolean add(CategoryInput category);
     
     /**
      * 카테고리 수정
@@ -31,8 +32,11 @@ public interface CategoryService {
     /**
      * 프론트 카테고리 정보
      */
+
     List<CategoryDto> frontList(String userName);
-    
+
+    List<ArticleDto> frontList2(String categoryName);
+
 
     List<CourseDto> findAllCourse();
 

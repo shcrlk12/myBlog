@@ -17,6 +17,7 @@ public class CategoryDto {
     
     Long id;
     String categoryName;
+    String articlePath;
     int sortValue;
     boolean usingYn;
     
@@ -43,6 +44,7 @@ public class CategoryDto {
                 .categoryName(category.getCategoryName())
                 .sortValue(category.getSortValue())
                 .usingYn(category.isUsingYn())
+                .articlePath(category.getArticlePath())
                 .build();
     }
     

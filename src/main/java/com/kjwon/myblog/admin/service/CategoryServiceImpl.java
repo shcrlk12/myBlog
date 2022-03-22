@@ -1,5 +1,6 @@
 package com.kjwon.myblog.admin.service;
 
+import com.kjwon.myblog.acrticle.Dto.ArticleDto;
 import com.kjwon.myblog.admin.dto.CategoryDto;
 import com.kjwon.myblog.admin.entity.Category;
 import com.kjwon.myblog.admin.model.CategoryInput;
@@ -41,31 +42,19 @@ public class CategoryServiceImpl implements CategoryService {
     }
     
     @Override
-    public boolean add(String categoryName, String userName) {
+    public boolean add(CategoryInput parameter) {
         
         //카테고리명이 중복인거 체크
         
         Category category = Category.builder()
-                .writer(userName)
-                .categoryName(categoryName)
+                .categoryName(parameter.getCategoryName())
                 .usingYn(true)
                 .sortValue(0)
+                .articlePath(parameter.getArticlePath())
                 .build();
+
         categoryRepository.save(category);
 
-        Optional<Member> memberOptional = memberRepository.findById(userName);
-
-        if(!memberOptional.isPresent())
-            return false;
-
-        Member member = memberOptional.get();
-
-        List<Category> categories = member.getCategoryList();
-
-        categories.add(category);
-        member.setCategoryList(categories);
-
-        memberRepository.save(member);
         return true;
     }
     
@@ -79,6 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
             category.setCategoryName(parameter.getCategoryName());
             category.setSortValue(parameter.getSortValue());
             category.setUsingYn(parameter.isUsingYn());
+            category.setArticlePath(parameter.getArticlePath());
             categoryRepository.save(category);
         }
         
@@ -127,5 +117,12 @@ public class CategoryServiceImpl implements CategoryService {
             return Collections.emptyList();
 
         return CourseDto.of(courseList);
+    }
+
+    @Override
+    public List<ArticleDto> frontList2(String categoryName) {
+
+
+        return null;
     }
 }

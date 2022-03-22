@@ -8,6 +8,8 @@ public class CategoryInput {
     
     long id;
     String categoryName;
+    String articlePath;
+
     int sortValue;
     boolean usingYn;
     

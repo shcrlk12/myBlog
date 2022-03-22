@@ -7,10 +7,12 @@ import com.kjwon.myblog.admin.entity.Category;
 import com.kjwon.myblog.admin.repository.CategoryRepository;
 import com.kjwon.myblog.member.entity.Member;
 import com.kjwon.myblog.member.repository.MemberRepository;
+import com.kjwon.myblog.util.ArticleUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class ArticleServiceImpl implements ArticleService{
 
         Article article = Article.builder()
                 .title(articleDto.getTitle())
-                .contents("articleDto.getContents()")
+                .contents(articleDto.getContents())
                 .isDelete(false)
                 .regDt(LocalDateTime.now())
                 .member(member)
@@ -37,5 +39,24 @@ public class ArticleServiceImpl implements ArticleService{
                 .build();
 
         articleRepository.save(article);
+    }
+
+    @Override
+    public List<ArticleDto> frontList(String articleType) {
+
+        Optional<Category> articleOptional = categoryRepository.findByArticlePath(articleType);
+
+        List<Article> articleList = articleRepository.findByArticleOnCategory(articleOptional.get().getCategoryName());
+
+        return ArticleDto.of(articleList);
+
+    }
+
+    @Override
+    public ArticleDto detail(Long id) {
+
+        Optional<Article> articleOptional = articleRepository.findById(id);
+
+        return ArticleDto.of(articleOptional.get());
     }
 }

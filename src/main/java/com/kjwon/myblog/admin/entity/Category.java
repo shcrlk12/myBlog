@@ -25,6 +25,7 @@ public class Category {
 
     String categoryName;
     String writer;
+    String articlePath;
 
     int sortValue;
     boolean usingYn;

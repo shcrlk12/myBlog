@@ -26,6 +26,7 @@ public class Article {
     private Long articleId;
 
     private String title;
+    @Lob
     private String contents;
 
     private boolean isDelete;
