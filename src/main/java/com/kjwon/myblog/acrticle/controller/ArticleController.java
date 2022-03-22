@@ -5,6 +5,7 @@ import com.kjwon.myblog.acrticle.entity.Article;
 import com.kjwon.myblog.acrticle.service.ArticleService;
 import com.kjwon.myblog.admin.dto.CategoryDto;
 import com.kjwon.myblog.admin.service.CategoryService;
+import com.kjwon.myblog.course.dto.CommentDto;
 import com.kjwon.myblog.course.dto.CourseDto;
 import com.kjwon.myblog.course.model.CourseInput;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,19 @@ public class ArticleController {
         ArticleDto articleDto = articleService.detail(id);
 
         model.addAttribute("articleDto", articleDto);
+
+        List<CommentDto> commentDtos = articleService.getComments(id);
+
+        model.addAttribute("comments", commentDtos);
+
+        return "article/detail";
+    }
+
+    @PostMapping("article/{articleType}/{id}")
+    public String registerComment(Model model,
+                                @PathVariable("id") Long id, CommentDto commentDto, Principal principal){
+
+        articleService.registerComment(id, commentDto, principal.getName());
 
         return "article/detail";
     }

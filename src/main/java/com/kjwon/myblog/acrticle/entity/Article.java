@@ -1,6 +1,7 @@
 package com.kjwon.myblog.acrticle.entity;
 
 import com.kjwon.myblog.admin.entity.Category;
+import com.kjwon.myblog.course.entity.Comment;
 import com.kjwon.myblog.course.entity.Course;
 import com.kjwon.myblog.member.entity.Member;
 import lombok.*;
@@ -44,5 +45,9 @@ public class Article {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
+
+    @OneToMany
+    @JoinColumn(name ="comment_id")
+    private List<Comment> commentList = new ArrayList<>();
 
 }

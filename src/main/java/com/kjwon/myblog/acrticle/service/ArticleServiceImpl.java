@@ -5,6 +5,10 @@ import com.kjwon.myblog.acrticle.entity.Article;
 import com.kjwon.myblog.acrticle.repository.ArticleRepository;
 import com.kjwon.myblog.admin.entity.Category;
 import com.kjwon.myblog.admin.repository.CategoryRepository;
+import com.kjwon.myblog.course.dto.CommentDto;
+import com.kjwon.myblog.course.entity.Comment;
+import com.kjwon.myblog.course.entity.Course;
+import com.kjwon.myblog.course.repository.CommentRepository;
 import com.kjwon.myblog.member.entity.Member;
 import com.kjwon.myblog.member.repository.MemberRepository;
 import com.kjwon.myblog.util.ArticleUtil;
@@ -12,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +27,7 @@ public class ArticleServiceImpl implements ArticleService{
     private final MemberRepository memberRepository;
     private final CategoryRepository categoryRepository;
     private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public void registerArticle(ArticleDto articleDto, String name) {
@@ -58,5 +64,44 @@ public class ArticleServiceImpl implements ArticleService{
         Optional<Article> articleOptional = articleRepository.findById(id);
 
         return ArticleDto.of(articleOptional.get());
+    }
+
+    @Override
+    public List<CommentDto> getComments(Long articleId) {
+        Optional<Article> articleOptional = articleRepository.findById(articleId);
+
+        if(!articleOptional.isPresent())
+            return Collections.emptyList();
+
+        Article article = articleOptional.get();
+        List<Comment> comments = article.getCommentList();
+
+        Collections.sort(comments);
+        return CommentDto.of(comments);
+    }
+
+    @Override
+    public void registerComment(Long id, CommentDto commentDto, String name) {
+
+        Comment comment = Comment.builder()
+                .text(commentDto.getText())
+                .userName(name)
+                .regDt(LocalDateTime.now())
+                .build();
+
+        commentRepository.save(comment);
+
+        Optional<Article> articleOptional = articleRepository.findById(id);
+
+        if(!articleOptional.isPresent())
+            return;
+
+        Article article = articleOptional.get();
+        List<Comment> comments = article.getCommentList();
+
+        comments.add(comment);
+
+        article.setCommentList(comments);
+        articleRepository.save(article);
     }
 }

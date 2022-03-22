@@ -35,24 +35,24 @@
 <!--            <a href="/course">글 목록</a>-->
 <!--        </form>-->
 <!--    </div>-->
-<!--    <div id="comment" class="clearfix">-->
-<!--        <div>-->
-<!--            <form method="post">-->
-<!--                <div class="comment-left">덧글 쓰기</div>-->
-<!--                <textarea class="write-comment" name = "commentText" id = "text" cols = "30" rows = "10"></textarea>-->
-<!--                <button type="submit">댓글 작성</button>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div id="comment" class="clearfix">
+        <div>
+            <form method="post">
+                <div class="comment-left">덧글 쓰기</div>
+                <textarea class="write-comment" name = "commentText" id = "text" cols = "30" rows = "10"></textarea>
+                <button type="submit">댓글 작성</button>
+            </form>
+        </div>
+    </div>
 
-<!--    <div th:each="x : ${comments}" style="border: solid 1px black">-->
-<!--        <div class="clearfix">-->
-<!--            <div th:text="${x.userName}" style="float: left"></div>-->
-<!--            <div th:text="${x.regDt}" style="float: right"></div>-->
-<!--        </div>-->
-<!--        <div th:text="${x.text}" style="height: 70px; border-top: solid 1px black; box-sizing: border-box"></div>-->
-<!--        <button th:if="${x.userName == userId}">덧글 삭제</button>-->
-<!--    </div>-->
+    <div th:each="x : ${comments}" style="border: solid 1px black">
+        <div class="clearfix">
+            <div th:text="${x.userName}" style="float: left"></div>
+            <div th:text="${x.regDt}" style="float: right"></div>
+        </div>
+        <div th:text="${x.text}" style="height: 70px; border-top: solid 1px black; box-sizing: border-box"></div>
+        <button th:if="${x.userName == userId}">덧글 삭제</button>
+    </div>
 </div>
 </body>
 </html>
