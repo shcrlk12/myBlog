@@ -20,38 +20,38 @@ public class AdminCategoryController {
     
     private final CategoryService categoryService;
     
-    @GetMapping("/category/list")
+    @GetMapping("/admin/category/list.do")
     public String list(Model model, MemberParam parameter, Principal principal) {
         
-        List<CategoryDto> list = categoryService.list(principal.getName());
+        List<CategoryDto> list = categoryService.list();
         model.addAttribute("list", list);
       
-        return "/category/list";
+        return "/admin/category/list";
     }
     
     
-    @PostMapping("/category/add")
+    @PostMapping("/admin/category/add.do")
     public String add(Model model, CategoryInput parameter, Principal principal) {
     
         boolean result = categoryService.add(parameter.getCategoryName(), principal.getName());
     
-        return "redirect:/category/list";
+        return "redirect:/admin/category/list.do";
     }
     
-    @PostMapping("/category/delete")
+    @PostMapping("/admin/category/delete.do")
     public String del(Model model, CategoryInput parameter) {
         
         boolean result = categoryService.del(parameter.getId());
         
-        return "redirect:/category/list";
+        return "redirect:/admin/category/list.do";
     }
     
-    @PostMapping("/category/update")
+    @PostMapping("/admin/category/update.do")
     public String update(Model model, CategoryInput parameter, Principal principal) {
         
         boolean result = categoryService.update(parameter, principal.getName());
         
-        return "redirect:/category/list";
+        return "redirect:/admin/category/list.do";
     }
     
 }

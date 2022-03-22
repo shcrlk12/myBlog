@@ -2,9 +2,86 @@
 <html lang = "en">
 <head>
     <meta charset = "UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        table{
+            width: 100%;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+
+            $('#submitForm').on('submit', function() {
+
+                // 에디터의 내용이 textarea에 적용된다.
+                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                console.log("test");
+
+            });
+
+
+        });
+    </script>
     <title>Title</title>
 </head>
 <body>
+    <h1>글 작성</h1>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+    <form id="submitForm" method="post" enctype="multipart/form-data">
+        <table>
+            <tbody>
+            <tr>
+                <th>카테고리</th>
+                <td>
+                    <select name="categoryId" required>
+                        <option value=""> 카테고리 선택 </option>
+                        <option
+                                th:each="x : ${categoryList}" th:value="${x.id}" th:text="${x.categoryName}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    제목
+                </th>
+                <td>
+                    <input type="text" name="title" placeholder="강좌명 입력" required/>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    내용
+                </th>
+                <td>
+                    <textarea id="contents" name="contents" placeholder="내용 입력"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="submit"> 등록 하기 1</button>
+    </form>
+
+    <script type="text/javascript" src="/js/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        var oEditors = [];
+
+        setTimeout(function() {
+
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "contents",
+                sSkinURI: "/js/se2/SmartEditor2Skin.html",
+                fCreator: "createSEditor2"
+            });
+        }, 10);
+
+
+    </script>
 
 </body>
 </html>

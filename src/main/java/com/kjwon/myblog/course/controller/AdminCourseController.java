@@ -42,7 +42,7 @@ public class AdminCourseController extends BaseController {
             , CourseInput parameter, Principal principal) {
 
         //카테고리 정보를 내려줘야 함.
-        model.addAttribute("category", categoryService.list(principal.getName()));
+        model.addAttribute("category", categoryService.list());
 
         boolean editMode = request.getRequestURI().contains("/edit");
         CourseDto detail = new CourseDto();

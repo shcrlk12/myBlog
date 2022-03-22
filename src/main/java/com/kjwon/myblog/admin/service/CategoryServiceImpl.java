@@ -35,15 +35,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
     
     @Override
-    public List<CategoryDto> list(String name) {
-        Optional<Member> memberOptional = memberRepository.findById(name);
-        if(!memberOptional.isPresent()){
-            return Collections.emptyList();
-        }
-        Member member = memberOptional.get();
-        List<Category> categories = member.getCategoryList();
+    public List<CategoryDto> list() {
 
-        return CategoryDto.of(categories);
+        return CategoryDto.of(categoryRepository.findAll());
     }
     
     @Override

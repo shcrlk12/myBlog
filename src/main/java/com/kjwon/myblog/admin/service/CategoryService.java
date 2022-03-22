@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CategoryService {
     
-    List<CategoryDto> list(String name);
+    List<CategoryDto> list();
     
     /**
      * 카테고리 신규 추가
