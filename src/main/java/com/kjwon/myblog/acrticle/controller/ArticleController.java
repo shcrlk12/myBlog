@@ -60,13 +60,23 @@ public class ArticleController {
         return "article/detail";
     }
 
+    @PostMapping("article/{articleType}/deleteComment")
+    public String deleteComment(Long commentId, @PathVariable String articleType){
+
+        System.out.println(commentId);
+
+        articleService.deleteComment(commentId);
+        return "redirect:/article/" + articleType;
+    }
+
+
     @PostMapping("article/{articleType}/{id}")
     public String registerComment(Model model,
                                 @PathVariable("id") Long id, CommentDto commentDto, Principal principal){
 
         articleService.registerComment(id, commentDto, principal.getName());
 
-        return "article/detail";
+        return "redirect:/article/detail/" + id;
     }
 
     @GetMapping("article/write_article")

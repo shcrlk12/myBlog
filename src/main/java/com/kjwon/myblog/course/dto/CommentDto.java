@@ -17,14 +17,14 @@ import java.util.Set;
 @Getter
 public class CommentDto {
     Long id;
-    String text;
+    String commentText;
     String userName;
     LocalDateTime regDt;
 
     public static CommentDto of(Comment comment) {
         return CommentDto.builder()
                 .id(comment.getId())
-                .text(comment.getText())
+                .commentText(comment.getText())
                 .userName(comment.getUserName())
                 .regDt(comment.getRegDt())
                 .build();

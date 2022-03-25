@@ -46,8 +46,7 @@ public class Article {
     @JoinColumn(name="category_id")
     private Category category;
 
-    @OneToMany
-    @JoinColumn(name ="comment_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
     private List<Comment> commentList = new ArrayList<>();
 
 }

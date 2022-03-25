@@ -46,12 +46,15 @@
     </div>
 
     <div th:each="x : ${comments}" style="border: solid 1px black">
-        <div class="clearfix">
-            <div th:text="${x.userName}" style="float: left"></div>
-            <div th:text="${x.regDt}" style="float: right"></div>
-        </div>
-        <div th:text="${x.text}" style="height: 70px; border-top: solid 1px black; box-sizing: border-box"></div>
-        <button th:if="${x.userName == userId}">덧글 삭제</button>
+        <form action = "deleteComment" method="post">
+            <div class="clearfix">
+                <div th:text="${x.userName}" style="float: left"></div>
+                <div th:text="${x.regDt}" style="float: right"></div>
+            </div>
+            <div th:text="${x.commentText}" style="height: 70px; border-top: solid 1px black; box-sizing: border-box"></div>
+            <button th:if="${x.userName == userId}">덧글 삭제</button>
+            <input th:value="${x.id}" type = "hidden" name="commentId">
+        </form>
     </div>
 </div>
 </body>

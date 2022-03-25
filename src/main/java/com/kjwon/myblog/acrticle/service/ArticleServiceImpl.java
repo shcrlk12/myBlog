@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -76,7 +77,9 @@ public class ArticleServiceImpl implements ArticleService{
         Article article = articleOptional.get();
         List<Comment> comments = article.getCommentList();
 
-        Collections.sort(comments);
+        System.out.println(article);
+        System.out.println(comments.size());
+
         return CommentDto.of(comments);
     }
 
@@ -84,9 +87,10 @@ public class ArticleServiceImpl implements ArticleService{
     public void registerComment(Long id, CommentDto commentDto, String name) {
 
         Comment comment = Comment.builder()
-                .text(commentDto.getText())
+                .text(commentDto.getCommentText())
                 .userName(name)
                 .regDt(LocalDateTime.now())
+                .article(articleRepository.findById(id).get())
                 .build();
 
         commentRepository.save(comment);
@@ -102,6 +106,13 @@ public class ArticleServiceImpl implements ArticleService{
         comments.add(comment);
 
         article.setCommentList(comments);
+
+        System.out.println(article.getArticleId());
         articleRepository.save(article);
+    }
+
+    @Override
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
     }
 }

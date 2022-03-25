@@ -15,4 +15,6 @@ public interface ArticleService {
     List<CommentDto> getComments(Long articleId);
 
     void registerComment(Long id, CommentDto commentDto, String name);
+
+    void deleteComment(Long commentId);
 }
