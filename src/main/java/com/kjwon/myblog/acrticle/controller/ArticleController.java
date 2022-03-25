@@ -1,6 +1,7 @@
 package com.kjwon.myblog.acrticle.controller;
 
 import com.kjwon.myblog.acrticle.Dto.ArticleDto;
+import com.kjwon.myblog.acrticle.Dto.LikeUnlikeDto;
 import com.kjwon.myblog.acrticle.entity.Article;
 import com.kjwon.myblog.acrticle.service.ArticleService;
 import com.kjwon.myblog.admin.dto.CategoryDto;
@@ -50,12 +51,13 @@ public class ArticleController {
                                 @PathVariable("id") Long id){
 
         ArticleDto articleDto = articleService.detail(id);
-
         model.addAttribute("articleDto", articleDto);
 
         List<CommentDto> commentDtos = articleService.getComments(id);
-
         model.addAttribute("comments", commentDtos);
+
+        LikeUnlikeDto likeUnlikeDto = articleService.getLikeUnLike(id);
+        model.addAttribute("likeUnlike", likeUnlikeDto);
 
         return "article/detail";
     }
@@ -77,6 +79,26 @@ public class ArticleController {
         articleService.registerComment(id, commentDto, principal.getName());
 
         return "redirect:/article/detail/" + id;
+    }
+
+    @PostMapping("article/{articleType}/{id}/like")
+    public String articleLike(Model model,
+                              @PathVariable Long id, @PathVariable String articleType, String likeUser, Principal principal){
+
+        if(likeUser.equals(principal.getName()))
+            articleService.articleLike(id, likeUser);
+
+        return "redirect:/article/" + articleType + id;
+    }
+
+    @PostMapping("article/{articleType}/{id}/unlike")
+    public String articleUnlike(Model model,
+                              @PathVariable Long id, @PathVariable String articleType, String likeUser, Principal principal){
+
+        if(likeUser.equals(principal.getName()))
+            articleService.articleUnlike(id, likeUser);
+
+        return "redirect:/article/" + articleType + id;
     }
 
     @GetMapping("article/write_article")

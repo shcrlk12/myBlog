@@ -19,6 +19,46 @@
             width:70%;
         }
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $("#like").click((e) => {
+                /*<![CDATA[*/
+                var userId = [[${userId}]];
+                /*]]>*/
+
+                $.ajax({
+                    type:"POST",
+                    url: location.pathname + "/like",
+                    data:{
+                        likeUser : userId
+                    },
+                    success: function(){
+                        location.reload();
+                    }
+                })
+            })
+
+            $("#unlike").click((e) => {
+                /*<![CDATA[*/
+                var userId = [[${userId}]];
+                /*]]>*/
+
+                $.ajax({
+                    type:"POST",
+                    url: location.pathname + "/unlike",
+                    data:{
+                        likeUser : userId
+                    },
+                    success: function(){
+                        location.reload();
+                    }
+                })
+            })
+        });
+
+    </script>
 </head>
 <body>
 <h1>글 </h1>
@@ -35,6 +75,10 @@
 <!--            <a href="/course">글 목록</a>-->
 <!--        </form>-->
 <!--    </div>-->
+
+    <button id="like">추천 <span th:text="${likeUnlike.getLike()}"></span></button>
+    <button id="unlike">비추천 <span th:text="${likeUnlike.getUnlike()}"></button>
+
     <div id="comment" class="clearfix">
         <div>
             <form method="post">

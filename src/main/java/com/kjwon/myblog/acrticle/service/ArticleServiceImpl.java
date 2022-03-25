@@ -1,8 +1,13 @@
 package com.kjwon.myblog.acrticle.service;
 
 import com.kjwon.myblog.acrticle.Dto.ArticleDto;
+import com.kjwon.myblog.acrticle.Dto.LikeUnlikeDto;
 import com.kjwon.myblog.acrticle.entity.Article;
+import com.kjwon.myblog.acrticle.entity.ArticleLike;
+import com.kjwon.myblog.acrticle.entity.ArticleUnlike;
+import com.kjwon.myblog.acrticle.repository.ArticleLikeRepository;
 import com.kjwon.myblog.acrticle.repository.ArticleRepository;
+import com.kjwon.myblog.acrticle.repository.ArticleUnlikeRepository;
 import com.kjwon.myblog.admin.entity.Category;
 import com.kjwon.myblog.admin.repository.CategoryRepository;
 import com.kjwon.myblog.course.dto.CommentDto;
@@ -13,6 +18,7 @@ import com.kjwon.myblog.member.entity.Member;
 import com.kjwon.myblog.member.repository.MemberRepository;
 import com.kjwon.myblog.util.ArticleUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +35,8 @@ public class ArticleServiceImpl implements ArticleService{
     private final CategoryRepository categoryRepository;
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
+    private final ArticleLikeRepository articleLikeRepository;
+    private final ArticleUnlikeRepository articleUnlikeRepository;
 
     @Override
     public void registerArticle(ArticleDto articleDto, String name) {
@@ -114,5 +122,39 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
+    }
+
+    @Override
+    public void articleLike(Long id, String likeUser) {
+        ArticleLike articleLike = ArticleLike.builder()
+                .member(memberRepository.getById(likeUser))
+                .choiceTime(LocalDateTime.now())
+                .article(articleRepository.getById(id))
+                .build();
+
+        articleLikeRepository.save(articleLike);
+    }
+
+    @Override
+    public LikeUnlikeDto getLikeUnLike(Long id) {
+
+        Article article = articleRepository.getById(id);
+        LikeUnlikeDto result = new LikeUnlikeDto();
+
+        result.setLike(article.getArticleLikeList().size());
+        result.setUnlike(article.getArticleUnlikeList().size());
+
+        return result;
+    }
+
+    @Override
+    public void articleUnlike(Long id, String likeUser) {
+        ArticleUnlike articleUnlike = ArticleUnlike.builder()
+                .member(memberRepository.getById(likeUser))
+                .choiceTime(LocalDateTime.now())
+                .article(articleRepository.getById(id))
+                .build();
+
+        articleUnlikeRepository.save(articleUnlike);
     }
 }

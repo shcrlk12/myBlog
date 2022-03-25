@@ -1,6 +1,7 @@
 package com.kjwon.myblog.acrticle.service;
 
 import com.kjwon.myblog.acrticle.Dto.ArticleDto;
+import com.kjwon.myblog.acrticle.Dto.LikeUnlikeDto;
 import com.kjwon.myblog.course.dto.CommentDto;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface ArticleService {
     void registerComment(Long id, CommentDto commentDto, String name);
 
     void deleteComment(Long commentId);
+
+    void articleLike(Long id, String likeUser);
+
+    LikeUnlikeDto getLikeUnLike(Long id);
+
+    void articleUnlike(Long id, String likeUser);
 }

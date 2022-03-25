@@ -38,6 +38,9 @@ public class Article {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
     private List<ArticleLike> articleLikeList = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "article")
+    private List<ArticleUnlike> articleUnlikeList = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name="member_userId")
     private Member member;
