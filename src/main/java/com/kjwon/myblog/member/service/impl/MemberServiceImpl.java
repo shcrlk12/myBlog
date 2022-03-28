@@ -1,5 +1,6 @@
 package com.kjwon.myblog.member.service.impl;
 
+import com.kjwon.myblog.acrticle.Dto.ArticleDto;
 import com.kjwon.myblog.admin.dto.MemberDto;
 import com.kjwon.myblog.admin.entity.EmailTemplate;
 import com.kjwon.myblog.admin.model.MemberParam;
@@ -373,6 +374,14 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.save(member);
         return true;
+    }
+
+    @Override
+    public List<ArticleDto> getMyArticle(String name) {
+
+        Member member = memberRepository.getById(name);
+
+        return ArticleDto.of(member.getArticleList());
     }
 }
 

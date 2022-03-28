@@ -1,6 +1,8 @@
 package com.kjwon.myblog.member.controller;
 
 
+import com.kjwon.myblog.acrticle.Dto.ArticleDto;
+import com.kjwon.myblog.admin.dto.CategoryDto;
 import com.kjwon.myblog.admin.dto.MemberDto;
 import com.kjwon.myblog.course.model.ServiceResult;
 import com.kjwon.myblog.member.model.MemberInput;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 
+import static com.kjwon.myblog.util.ArticleUtil.articleOverview;
+
 @RequiredArgsConstructor
 @Controller
 public class MemberController {
@@ -28,7 +32,17 @@ public class MemberController {
         
         return "member/login";
     }
-    
+
+    @GetMapping("member/info/article")
+    public String myArticle(Model model, Principal principal)
+    {
+        List<ArticleDto> articleDtoList = memberService.getMyArticle(principal.getName());
+
+        model.addAttribute("articleList", articleOverview(articleDtoList));
+
+        return "article/articleList";
+    }
+
     @GetMapping("/member/find-password")
     public String findPassword() {
         

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleUtil {
-    public static List<String> articleOverview(List<ArticleDto> articleDtoList, String articleType) {
+    public static List<String> articleOverview(List<ArticleDto> articleDtoList) {
 
 
         List<String> articleList = new ArrayList<>();

@@ -56,7 +56,7 @@ public class ArticleController {
         if(id == 0){
             List<ArticleDto> articleList = articleService.frontList(articleType);
 
-            model.addAttribute("articleList", articleOverview(articleList, articleType));
+            model.addAttribute("articleList", articleOverview(articleList));
 
             return "article/articleList";
         }
@@ -110,7 +110,6 @@ public class ArticleController {
     public String articleUnlike(Model model,
                               @PathVariable Long id, @PathVariable String articleType, String likeUser, Principal principal){
 
-
         if(likeUser.equals(principal.getName()))
             articleService.articleUnlike(id, likeUser);
 
@@ -126,6 +125,7 @@ public class ArticleController {
 
         return "article/write_article";
     }
+
 
     @PostMapping("article/write_article")
     public String postWriteArticle(Model model, HttpServletRequest request

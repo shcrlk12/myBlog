@@ -1,6 +1,7 @@
 package com.kjwon.myblog.member.service;
 
 
+import com.kjwon.myblog.acrticle.Dto.ArticleDto;
 import com.kjwon.myblog.admin.dto.MemberDto;
 import com.kjwon.myblog.admin.model.MemberParam;
 import com.kjwon.myblog.course.model.ServiceResult;
@@ -68,4 +69,5 @@ public interface MemberService extends UserDetailsService {
 
     boolean resetPassword(String id, String password);
 
+    List<ArticleDto> getMyArticle(String name);
 }
