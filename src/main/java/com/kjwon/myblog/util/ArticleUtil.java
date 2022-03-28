@@ -16,8 +16,6 @@ public class ArticleUtil {
 
             String sb = "<td>" +
                     "<a href = \"" +
-                    articleType +
-                    "/" +
                     articleDto.getId() +
                     "\">" +
                     articleDto.getTitle() +

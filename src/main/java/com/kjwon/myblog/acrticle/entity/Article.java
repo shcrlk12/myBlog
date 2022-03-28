@@ -19,6 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Article {
 
+    public Article(Long id){
+        this.articleId = id;
+    }
 //    @EmbeddedId
 //    private ArticleId articleId;
     @Id
@@ -31,6 +34,7 @@ public class Article {
     private String contents;
 
     private boolean isDelete;
+    private boolean isPopularArticle;
 
     private LocalDateTime manyChoiceTime;
     private LocalDateTime regDt;

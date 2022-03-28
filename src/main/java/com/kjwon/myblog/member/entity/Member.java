@@ -19,7 +19,10 @@ import java.util.List;
 @Data
 @Entity
 public class Member implements MemberCode {
-    
+
+    public Member(String userId){
+        this.userId = userId;
+    }
     @Id
     private String userId;
     private String userName;

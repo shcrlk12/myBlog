@@ -60,8 +60,15 @@ public class ArticleServiceImpl implements ArticleService{
     public List<ArticleDto> frontList(String articleType) {
 
         Optional<Category> articleOptional = categoryRepository.findByArticlePath(articleType);
+        List<Article> articleList = null;
 
-        List<Article> articleList = articleRepository.findByArticleOnCategory(articleOptional.get().getCategoryName());
+        String categoryName = articleOptional.get().getCategoryName();
+
+        if(categoryName.equals("인기 게시판")){
+            articleList = articleRepository.findByAllIsPopularArticle();
+        }
+        else
+            articleList = articleRepository.findByArticleOnCategory(categoryName);
 
         return ArticleDto.of(articleList);
 
@@ -126,6 +133,12 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public void articleLike(Long id, String likeUser) {
+
+        List<ArticleLike> articleLikeList = articleLikeRepository.findByArticleAndMember(new Article(id), new Member(likeUser));
+
+        if(!articleLikeList.isEmpty())
+            return;
+
         ArticleLike articleLike = ArticleLike.builder()
                 .member(memberRepository.getById(likeUser))
                 .choiceTime(LocalDateTime.now())
@@ -149,6 +162,12 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public void articleUnlike(Long id, String likeUser) {
+
+        List<ArticleUnlike> articleUnlikeList = articleUnlikeRepository.findByArticleAndMember(new Article(id), new Member(likeUser));
+
+        if(!articleUnlikeList.isEmpty())
+            return;
+
         ArticleUnlike articleUnlike = ArticleUnlike.builder()
                 .member(memberRepository.getById(likeUser))
                 .choiceTime(LocalDateTime.now())
@@ -156,5 +175,15 @@ public class ArticleServiceImpl implements ArticleService{
                 .build();
 
         articleUnlikeRepository.save(articleUnlike);
+    }
+
+    @Override
+    public void postPopularArticle(Long id) {
+        Article article = articleRepository.getById(id);
+
+        article.setManyChoiceTime(LocalDateTime.now());
+        article.setPopularArticle(true);
+
+        articleRepository.save(article);
     }
 }

@@ -15,4 +15,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT distinct a FROM Article a join fetch a.category where a.category.categoryName = :categoryName")
     public List<Article> findByArticleOnCategory(String categoryName);
 
+    @Query("SELECT distinct a FROM Article a WHERE a.isPopularArticle = true")
+    public List<Article> findByAllIsPopularArticle();
+
+
+
 }

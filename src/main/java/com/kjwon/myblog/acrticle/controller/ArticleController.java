@@ -3,12 +3,15 @@ package com.kjwon.myblog.acrticle.controller;
 import com.kjwon.myblog.acrticle.Dto.ArticleDto;
 import com.kjwon.myblog.acrticle.Dto.LikeUnlikeDto;
 import com.kjwon.myblog.acrticle.entity.Article;
+import com.kjwon.myblog.acrticle.entity.ArticleLike;
+import com.kjwon.myblog.acrticle.entity.ArticleUnlike;
 import com.kjwon.myblog.acrticle.service.ArticleService;
 import com.kjwon.myblog.admin.dto.CategoryDto;
 import com.kjwon.myblog.admin.service.CategoryService;
 import com.kjwon.myblog.course.dto.CommentDto;
 import com.kjwon.myblog.course.dto.CourseDto;
 import com.kjwon.myblog.course.model.CourseInput;
+import com.kjwon.myblog.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,20 +38,28 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CategoryService categoryService;
 
-    @GetMapping("article/{articleType}")
-    public String articleList(Model model,
-                              @PathVariable("articleType") String articleType){
-
-        List<ArticleDto> articleList = articleService.frontList(articleType);
-
-        model.addAttribute("articleList", articleOverview(articleList, articleType));
-
-        return "article/articleList";
-    }
+//    @GetMapping("article/{articleType}")
+//    public String articleList(Model model,
+//                              @PathVariable("articleType") String articleType){
+//
+//        System.out.println(articleType);
+//        List<ArticleDto> articleList = articleService.frontList(articleType);
+//
+//        model.addAttribute("articleList", articleOverview(articleList, articleType));
+//
+//        return "article/articleList";
+//    }
 
     @GetMapping("article/{articleType}/{id}")
     public String datailArticle(Model model,
-                                @PathVariable("id") Long id){
+                                @PathVariable("id") Long id, @PathVariable("articleType") String articleType){
+        if(id == 0){
+            List<ArticleDto> articleList = articleService.frontList(articleType);
+
+            model.addAttribute("articleList", articleOverview(articleList, articleType));
+
+            return "article/articleList";
+        }
 
         ArticleDto articleDto = articleService.detail(id);
         model.addAttribute("articleDto", articleDto);
@@ -88,17 +99,22 @@ public class ArticleController {
         if(likeUser.equals(principal.getName()))
             articleService.articleLike(id, likeUser);
 
-        return "redirect:/article/" + articleType + id;
+        LikeUnlikeDto likeUnlikeDto = articleService.getLikeUnLike(id);
+
+        if(likeUnlikeDto.getLike() - likeUnlikeDto.getUnlike() > 2)
+            articleService.postPopularArticle(id);
+        return "redirect:/article/" + articleType + "/" + id;
     }
 
     @PostMapping("article/{articleType}/{id}/unlike")
     public String articleUnlike(Model model,
                               @PathVariable Long id, @PathVariable String articleType, String likeUser, Principal principal){
 
+
         if(likeUser.equals(principal.getName()))
             articleService.articleUnlike(id, likeUser);
 
-        return "redirect:/article/" + articleType + id;
+        return "redirect:/article/" + articleType + "/" + id;
     }
 
     @GetMapping("article/write_article")
