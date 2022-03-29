@@ -66,6 +66,11 @@
 
 <div>
     <h2>제목: <span th:text="${articleDto.title}"></span></h2>
+    <div th:if="${#strings.equals(userId, articleDto.getMember().getUserId())}" class="clearfix">
+        <div style="float: right">
+            <a th:href="@{edit(id=${id})}">수정</a>
+        </div>
+    </div>
     <div th:utext="${articleDto.contents}">
     </div>
 

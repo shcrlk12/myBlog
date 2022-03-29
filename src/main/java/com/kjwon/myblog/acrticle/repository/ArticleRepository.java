@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    @Query(value = "SELECT distinct a FROM Article a join fetch a.category where a.category.categoryName = :categoryName"
+    @Query(value = "SELECT distinct a FROM Article a join fetch a.category where a.category.categoryName = :categoryName order by a.regDt desc"
             , countQuery = "select count(a) from Article a where a.category.categoryName = :categoryName")
     Page<Article> findByArticleOnCategory(String categoryName, Pageable pageable);
 

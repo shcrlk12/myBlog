@@ -9,6 +9,7 @@ import com.kjwon.myblog.member.model.MemberInput;
 import com.kjwon.myblog.member.model.ResetPasswordInput;
 import com.kjwon.myblog.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import static com.kjwon.myblog.util.ArticleUtil.articleOverview;
+import static com.kjwon.myblog.util.ArticleUtil.pagingUtil;
 
 @RequiredArgsConstructor
 @Controller
@@ -34,13 +37,25 @@ public class MemberController {
     }
 
     @GetMapping("member/info/article")
-    public String myArticle(Model model, Principal principal)
+    public String myArticle(Model model, Principal principal, Optional<Integer> page)
     {
+        int pageNum = 1;
+
+        if(page.isPresent())
+            pageNum = page.get();
+
+        List<ArticleDto> articleList = memberService.getMyArticle(principal.getName());
+
+        model.addAttribute("articleList", articleOverview(articleList));
+
+        model.addAttribute("paging", pagingUtil(articleList));
+
+        return "article/articleList";
+
 //        Page<ArticleDto> articleDtoList = memberService.getMyArticle(principal.getName());
 //
 //        model.addAttribute("articleList", articleOverview(articleDtoList));
 
-        return "article/articleList";
     }
 
     @GetMapping("/member/find-password")

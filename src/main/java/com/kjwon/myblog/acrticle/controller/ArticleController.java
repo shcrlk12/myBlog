@@ -99,7 +99,7 @@ public class ArticleController {
                                 @PathVariable("id") Long id, CommentDto commentDto, Principal principal){
 
         articleService.registerComment(id, commentDto, principal.getName());
-
+        model.addAttribute("id", id);
         return "redirect:/article/detail/" + id;
     }
 
@@ -127,14 +127,29 @@ public class ArticleController {
         return "redirect:/article/" + articleType + "/" + id;
     }
 
-    @GetMapping("article/write_article")
-    public String writeArticle(Model model)
+    @GetMapping(value = {"article/write_article", "/article/free_article/edit"})
+    public String writeArticle(Model model, Long id)
     {
+
         List<CategoryDto> categoryDtoList = categoryService.list();
+        ArticleDto articleDto = new ArticleDto();
 
         model.addAttribute("categoryList", categoryDtoList);
 
+        if(id == null) {
+            model.addAttribute("edit", false);
+            model.addAttribute("articleDto", articleDto);
+            return "article/write_article";
+
+        }
+
+
+        articleDto = articleService.detail(id);
+        model.addAttribute("edit", true);
+        model.addAttribute("articleDto", articleDto);
+
         return "article/write_article";
+
     }
 
 

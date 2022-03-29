@@ -35,7 +35,15 @@
             <tr>
                 <th>카테고리</th>
                 <td>
-                    <select name="categoryId" required>
+                    <select th:if="${edit == true}" name="categoryId" required disabled>
+                        <option value=""> 카테고리 선택 </option>
+                        <option
+                                th:selected="${articleDto.categoryId == x.id}"
+                                th:each="x : ${categoryList}" th:value="${x.id}" th:text="${x.categoryName}">
+                        </option>
+                    </select>
+
+                    <select th:if="${edit == false}" name="categoryId" required>
                         <option value=""> 카테고리 선택 </option>
                         <option
                                 th:each="x : ${categoryList}" th:value="${x.id}" th:text="${x.categoryName}">
@@ -48,7 +56,7 @@
                     제목
                 </th>
                 <td>
-                    <input type="text" name="title" placeholder="강좌명 입력" required/>
+                    <input th:value="${articleDto.getTitle()}" type="text" name="title" placeholder="강좌명 입력" required/>
                 </td>
             </tr>
             <tr>
@@ -56,13 +64,13 @@
                     내용
                 </th>
                 <td>
-                    <textarea id="contents" name="contents" placeholder="내용 입력"></textarea>
+                    <textarea th:text="${articleDto.getContents()}" id="contents" name="contents" placeholder="내용 입력"></textarea>
                 </td>
             </tr>
             </tbody>
         </table>
 
-        <button type="submit"> 등록 하기 1</button>
+        <button type="submit"> 등록 하기 </button>
     </form>
 
     <script type="text/javascript" src="/js/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>

@@ -8,6 +8,7 @@ import com.kjwon.myblog.course.model.ServiceResult;
 import com.kjwon.myblog.member.dto.LoginHistoryDto;
 import com.kjwon.myblog.member.model.MemberInput;
 import com.kjwon.myblog.member.model.ResetPasswordInput;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

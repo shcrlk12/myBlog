@@ -18,6 +18,7 @@ import com.kjwon.myblog.member.repository.MemberRepository;
 import com.kjwon.myblog.member.service.MemberService;
 import com.kjwon.myblog.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
