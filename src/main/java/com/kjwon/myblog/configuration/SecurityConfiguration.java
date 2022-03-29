@@ -54,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         , "/member/find-password"
                         , "/member/reset/password"
                         , "/img/**"
+                        , "/article/**"
                 )
                 .permitAll();
     
