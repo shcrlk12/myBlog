@@ -13,6 +13,7 @@ import com.kjwon.myblog.course.dto.CourseDto;
 import com.kjwon.myblog.course.model.CourseInput;
 import com.kjwon.myblog.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -28,8 +29,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.kjwon.myblog.util.ArticleUtil.articleOverview;
+import static com.kjwon.myblog.util.ArticleUtil.pagingUtil;
 
 @RequiredArgsConstructor
 @Controller
@@ -52,11 +55,19 @@ public class ArticleController {
 
     @GetMapping("article/{articleType}/{id}")
     public String datailArticle(Model model,
-                                @PathVariable("id") Long id, @PathVariable("articleType") String articleType){
+                                @PathVariable("id") Long id, @PathVariable("articleType") String articleType,
+                                Optional<Integer> page){
+        int pageNum = 1;
+
+        if(page.isPresent())
+            pageNum = page.get();
+
         if(id == 0){
-            List<ArticleDto> articleList = articleService.frontList(articleType);
+            Page<ArticleDto> articleList = articleService.frontList(pageNum, articleType);
 
             model.addAttribute("articleList", articleOverview(articleList));
+
+            model.addAttribute("paging", pagingUtil(articleList));
 
             return "article/articleList";
         }

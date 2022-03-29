@@ -19,6 +19,8 @@ import com.kjwon.myblog.member.repository.MemberRepository;
 import com.kjwon.myblog.util.ArticleUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.jni.Local;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -57,21 +59,22 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public List<ArticleDto> frontList(String articleType) {
+    public Page<ArticleDto> frontList(int page, String articleType) {
 
         Optional<Category> articleOptional = categoryRepository.findByArticlePath(articleType);
-        List<Article> articleList = null;
+        Page<Article> articleList = null;
 
         String categoryName = articleOptional.get().getCategoryName();
 
         if(categoryName.equals("인기 게시판")){
-            articleList = articleRepository.findByAllIsPopularArticle();
+            articleList = articleRepository.findByAllIsPopularArticle(PageRequest.of(page - 1,30));
         }
         else
-            articleList = articleRepository.findByArticleOnCategory(categoryName);
+        {
+            articleList = articleRepository.findByArticleOnCategory(categoryName, PageRequest.of(page - 1,30));
+        }
 
-        return ArticleDto.of(articleList);
-
+        return articleList.map(ArticleDto::of);
     }
 
     @Override

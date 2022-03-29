@@ -3,13 +3,14 @@ package com.kjwon.myblog.acrticle.service;
 import com.kjwon.myblog.acrticle.Dto.ArticleDto;
 import com.kjwon.myblog.acrticle.Dto.LikeUnlikeDto;
 import com.kjwon.myblog.course.dto.CommentDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ArticleService {
     void registerArticle(ArticleDto articleDto, String name);
 
-    List<ArticleDto> frontList(String articleType);
+    Page<ArticleDto> frontList(int page, String articleType);
 
     ArticleDto detail(Long id);
 

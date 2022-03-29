@@ -36,9 +36,9 @@ public class MemberController {
     @GetMapping("member/info/article")
     public String myArticle(Model model, Principal principal)
     {
-        List<ArticleDto> articleDtoList = memberService.getMyArticle(principal.getName());
-
-        model.addAttribute("articleList", articleOverview(articleDtoList));
+//        Page<ArticleDto> articleDtoList = memberService.getMyArticle(principal.getName());
+//
+//        model.addAttribute("articleList", articleOverview(articleDtoList));
 
         return "article/articleList";
     }
