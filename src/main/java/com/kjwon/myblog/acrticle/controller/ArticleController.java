@@ -127,7 +127,7 @@ public class ArticleController {
         return "redirect:/article/" + articleType + "/" + id;
     }
 
-    @GetMapping(value = {"article/write_article", "/article/free_article/edit"})
+    @GetMapping(value = {"article/write_article", "/article/{articleType}/edit"})
     public String writeArticle(Model model, Long id)
     {
 
@@ -153,68 +153,17 @@ public class ArticleController {
     }
 
 
-    @PostMapping("article/write_article")
+    @PostMapping(value = {"article/write_article", "/article/{articleType}/edit"})
     public String postWriteArticle(Model model, HttpServletRequest request
             ,  Principal principal, ArticleDto articleDto) {
 
-        System.out.println(articleDto.getCategoryId());
-        System.out.println(articleDto.getContents());
-        System.out.println(articleDto.getTitle());
+        if(request.getRequestURI().contains("edit"))
+        {
+            articleService.updateArticle(articleDto, principal.getName());
+        }else{
+            articleService.registerArticle(articleDto, principal.getName());
+        }
 
-        articleService.registerArticle(articleDto, principal.getName());
-//        String saveFilename = "";
-//        String urlFilename = "";
-//
-//        String basePath = "/usr/local/tomcat";
-//        String baseLocalPath = "/img/blog/thumbnail/";
-//        String baseUrlPath = "/img/blog/thumbnail/";
-//
-//        if(!Objects.equals(file.getOriginalFilename(), "")) {
-//            String originalFilename = file.getOriginalFilename();
-//
-//
-//
-//            String[] arrFilename = getNewSaveFile(baseLocalPath, baseUrlPath, originalFilename);
-//
-//            saveFilename = arrFilename[0];
-//            urlFilename = arrFilename[1];
-//            log.info("blog thumnail save to " + basePath + baseLocalPath + originalFilename);
-//
-//            try {
-//                File newFile = new File( basePath + baseLocalPath + originalFilename);
-//                FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
-//            } catch (IOException e) {
-//                log.info("############################ - 1");
-//                log.info(e.getMessage());
-//            }
-//
-//            parameter.setFilename(baseLocalPath + originalFilename);
-//            parameter.setUrlFilename(baseLocalPath + originalFilename);
-//        }
-//        else{
-//            parameter.setFilename(baseLocalPath + "default.jpg");
-//            parameter.setUrlFilename(baseLocalPath + "default.jpg");
-//        }
-//
-//
-//
-//        boolean editMode = request.getRequestURI().contains("/edit");
-//
-//        if (editMode) {
-//            long id = parameter.getId();
-//            CourseDto existCourse = courseService.getById(id);
-//            if (existCourse == null) {
-//                // error 처리
-//                model.addAttribute("message", "강좌정보가 존재하지 않습니다.");
-//                return "common/error";
-//            }
-//
-//            boolean result = courseService.set(parameter, principal.getName());
-//
-//        } else {
-//            boolean result = courseService.add(parameter, principal.getName());
-//        }
-//
         return "redirect:/";
     }
 }

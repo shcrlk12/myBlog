@@ -189,4 +189,14 @@ public class ArticleServiceImpl implements ArticleService{
 
         articleRepository.save(article);
     }
+
+    @Override
+    public void updateArticle(ArticleDto articleDto, String name) {
+        Article article = articleRepository.getById(articleDto.getId());
+
+        article.setTitle(articleDto.getTitle());
+        article.setContents(articleDto.getContents());
+
+        articleRepository.save(article);
+    }
 }

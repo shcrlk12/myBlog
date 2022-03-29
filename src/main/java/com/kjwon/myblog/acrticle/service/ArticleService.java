@@ -27,4 +27,6 @@ public interface ArticleService {
     void articleUnlike(Long id, String likeUser);
 
     void postPopularArticle(Long id);
+
+    void updateArticle(ArticleDto articleDto, String name);
 }
