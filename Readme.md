@@ -26,8 +26,8 @@
     * 광고 게시일, 표시일
 
 ## Page
-### 일반 유저
+* ### 일반 유저
 <img src="./readmeImg/userRole.png">
 
-### 관리자
+* ### 관리자
 <img src="./readmeImg/adminRole.png">
